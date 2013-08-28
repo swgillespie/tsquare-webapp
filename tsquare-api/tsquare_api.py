@@ -16,6 +16,9 @@ class TSquareAuthException(TSquareException):
 
 class NotAuthenticatedException(TSquareException):
     pass
+
+class SessionExpiredException(TSquareException):
+    pass
     
 class TSquareAPI(object):
     def requires_authentication(func):
@@ -90,20 +93,50 @@ class TSquareAPI(object):
         @returns - A list of TSquareSite objects encapsulating t-square's JSON
                    response.
         '''
-        response = self._session.get(BASE_URL_TSQUARE + '/direct/site.json')
+        response = self._session.get(BASE_URL_TSQUARE + 'site.json')
         response.raise_for_status() # raise an exception if not 200: OK
         site_list = response.json()['site_collection']
         if site_list == []:
-            # this is an indication that the user is either not logged in or
-            # the session expired. Either way, it's bad news. Probably
-            # throw an exception here or something. -Sean
-            pass
+            # this means that this t-square session expired. It's up
+            # to the user to re-authenticate.
+            self._authenticated = False
+            raise SessionExpiredException('The session has expired')
         if filter_func:
             return filter(filter_func,
                           map(lambda x: TSquareSite(**x), site_list))
         else:
             return map(lambda x: TSquareSite(**x), site_list)
 
+            
+    @attributes(version_added='0.1',
+                author='Sean Gillespie')
+    @requires_authentication
+    def get_announcements(self, site=None, num=10, age=20):
+        '''
+        Gets announcements from a site if site is not None, or from every
+        site otherwise. Returns a list of TSquareAnnouncement objects.
+        @param site_obj (TSquareSite) If non-None, gets only the announcements
+                                      from that site. If none, get anouncements
+                                      from all sites.
+        @param num - The number of announcements to fetch. Default is 10.
+        @param age - 'How far back' to go to retreive announcements. Default
+                     is 20, which means that only announcements that are
+                     less than 20 days old will be returned, even if there
+                     less than 'num' of them.
+        @returns - A list of TSquareAnnouncement objects. The length will be
+                   at most num, and it may be less than num depending on
+                   the number of announcements whose age is less than age.
+        '''
+        url = BASE_URL_TSQUARE + 'announcement/'
+        if site:
+            url += 'site/{}.json?n={}&d={}'.format(site.id, num, age)
+        else:
+            url += 'user.json?n={}&d={}'.format(num, age)
+        request = self._session.get(url)
+        request.raise_for_status()
+        announcement_list = request.json()['announcement_collection']
+        return map(lambda x: TSquareAnnouncement(**x), announcement_list)
+        
 class TSquareUser:
     def __init__(self, **kwargs):
         '''
@@ -125,7 +158,20 @@ class TSquareSite:
         '''
         for key in kwargs:
             setattr(self, key, kwargs[key])
-        
+
+class TSquareAnnouncement:
+    def __init__(self, **kwargs):
+        '''
+        Encapsulates the raw JSON dictionary that represents an announcement
+        in TSquare.
+        Converts a dictionary to attributes of an object for ease of use.
+        This constructor should never be called directly; instead, it is called
+        by get_announcements.
+        '''
+        for key in kwargs:
+            setattr(self, key, kwargs[key])
+
+            
 def _get_ticket(username, password):
     # step 1 - get a CAS ticket
     data = { 'username' : username, 'password' : password }
@@ -155,6 +201,3 @@ def _tsquare_login(service_ticket):
     # step 3 - redeem the ticket with TSquare and receive authenticated session
     session.get(SERVICE + '?ticket={}'.format(service_ticket))
     return session
-
-    
-    
