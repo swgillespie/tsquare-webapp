@@ -7,6 +7,8 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
+AUTHENTICATION_BACKENDS = ('tsquare.TSquareAuthBackend.TSquareAuthBackend')
+
 MANAGERS = ADMINS
 
 DATABASES = {
@@ -27,7 +29,7 @@ DATABASES = {
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'America/New_York'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -110,6 +112,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    'C:/Users/Nirav/My Documents/Aptana Studio 3 Workspace/CS_4911_Tsquare/CS_4911_Tsquare/tsquare/templates'
 )
 
 INSTALLED_APPS = (
