@@ -29,9 +29,9 @@ class TSquareAPI(object):
         '''
         def _auth(self, *args, **kwargs):
             if not self._authenticated:
-                raise NotAuthenticatedException('Function {} requires' +
-                                                'authentication'
-                                                .format(func.__name_))
+                raise NotAuthenticatedException('Function {} requires'
+                                                .format(func.__name__)
+                                                + ' authentication')
             else:
                 return func(self, *args, **kwargs)
         return _auth
@@ -48,7 +48,7 @@ class TSquareAPI(object):
         @throws TSquareAuthException - If something goes wrong during the
         authentication process (i.e. credentials are bad)
         '''
-        self._authenticated = False
+        self._authenticated = True
         self.username = username
         self._tg_ticket, self._service_ticket = _get_ticket(username, password)
         self._session = _tsquare_login(self._service_ticket)
@@ -56,6 +56,7 @@ class TSquareAPI(object):
     @requires_authentication
     def logout(self):
         # TODO
+        pass
         
     @requires_authentication
     def get_user_info(self):
