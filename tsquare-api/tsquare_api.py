@@ -36,34 +36,27 @@ class TSquareAPI(object):
                 return func(self, *args, **kwargs)
         return _auth
 
-    def attributes(**kwargs):
-        '''
-        Function decorator that adds some metadata to functions.
-        '''
-        def _decorate(func):
-            for key in kwargs:
-                setattr(func, key, kwargs[key])
-            return func
-        return _decorate
-
-
     def __init__(self, username, password):
         '''
-        Initialize a TSquareAPI object. Attempts to log in with the given
-        username and password.
+        Initialize a TSquareAPI object.
+        Logs in to TSquare with username and password.
         @param username - The username to log in with
         @param password - The password to log in with. Not stored.
 
+        @returns A TSquareUser object that represents the user that
+                 was logged in.
         @throws TSquareAuthException - If something goes wrong during the
-        authentication process.
+        authentication process (i.e. credentials are bad)
         '''
+        self._authenticated = False
         self.username = username
         self._tg_ticket, self._service_ticket = _get_ticket(username, password)
         self._session = _tsquare_login(self._service_ticket)
-        self._authenticated = True
 
-    @attributes(version_added='0.1',
-                author='Sean Gillespie')
+    @requires_authentication
+    def logout(self):
+        # TODO
+        
     @requires_authentication
     def get_user_info(self):
         '''
@@ -76,8 +69,6 @@ class TSquareAPI(object):
         del user_data['password'] # tsquare doesn't store passwords
         return TSquareUser(**user_data)
 
-    @attributes(version_added='0.1',
-                author='Sean Gillespie')
     @requires_authentication
     def get_sites(self, filter_func=None):
         '''
@@ -108,8 +99,6 @@ class TSquareAPI(object):
             return map(lambda x: TSquareSite(**x), site_list)
 
             
-    @attributes(version_added='0.1',
-                author='Sean Gillespie')
     @requires_authentication
     def get_announcements(self, site=None, num=10, age=20):
         '''
