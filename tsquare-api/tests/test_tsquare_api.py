@@ -17,9 +17,12 @@ class TSquareAPITests(unittest.TestCase):
         self.assertIsNotNone(api._service_ticket)
         self.assertIsNotNone(api._session)
 
-    @unittest.expectedFailure
     def test_logout(self):
-        self.fail(msg="Logout has not been implemented")
+        api = tsquare_api.TSquareAPI(TSQUARE_LOGIN, TSQUARE_PASS)
+        self.assertTrue(api._authenticated)
+        api.logout()
+        self.assertFalse(api._authenticated)
+
 
     def test_user_info(self):
         api = tsquare_api.TSquareAPI(TSQUARE_LOGIN, TSQUARE_PASS)

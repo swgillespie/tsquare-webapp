@@ -55,8 +55,8 @@ class TSquareAPI(object):
 
     @requires_authentication
     def logout(self):
-        # TODO
-        pass
+        self._session.delete(BASE_URL_GATECH + 'rest/tickets/{}'.format(self._tg_ticket))
+        self._authenticated = False
         
     @requires_authentication
     def get_user_info(self):
@@ -71,7 +71,7 @@ class TSquareAPI(object):
         return TSquareUser(**user_data)
 
     @requires_authentication
-    def get_sites(self, filter_func=None):
+    def get_sites(self, filter_func=lambda x: True):
         '''
         Returns a list of TSquareSite objects that represent the sites available
         to a user.
@@ -88,17 +88,25 @@ class TSquareAPI(object):
         response = self._session.get(BASE_URL_TSQUARE + 'site.json')
         response.raise_for_status() # raise an exception if not 200: OK
         site_list = response.json()['site_collection']
+        
         if site_list == []:
             # this means that this t-square session expired. It's up
             # to the user to re-authenticate.
             self._authenticated = False
             raise SessionExpiredException('The session has expired')
-        if filter_func:
-            return filter(filter_func,
-                          map(lambda x: TSquareSite(**x), site_list))
-        else:
-            return map(lambda x: TSquareSite(**x), site_list)
-
+        result_list = []
+        for site in site_list:
+            t_site = TSquareSite(**site)
+            if not t_site.props:
+                t_site.props = {}
+            if not 'banner-crn' in t_site.props:
+                t_site.props['banner-crn'] = None
+            if not 'term' in t_site.props:
+                t_site.props['term'] = None
+            if not 'term_eid' in t_site.props:
+                t_site.props['term_eid'] = None
+            result_list.append(t_site)
+        return result_list
             
     @requires_authentication
     def get_announcements(self, site=None, num=10, age=20):
