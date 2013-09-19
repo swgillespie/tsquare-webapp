@@ -29,41 +29,35 @@ class TSquareAPI(object):
         '''
         def _auth(self, *args, **kwargs):
             if not self._authenticated:
-                raise NotAuthenticatedException('Function {} requires' +
-                                                'authentication'
-                                                .format(func.__name_))
+                raise NotAuthenticatedException('Function {} requires'
+                                                .format(func.__name__)
+                                                + ' authentication')
             else:
                 return func(self, *args, **kwargs)
         return _auth
 
-    def attributes(**kwargs):
-        '''
-        Function decorator that adds some metadata to functions.
-        '''
-        def _decorate(func):
-            for key in kwargs:
-                setattr(func, key, kwargs[key])
-            return func
-        return _decorate
-
-
     def __init__(self, username, password):
         '''
-        Initialize a TSquareAPI object. Attempts to log in with the given
-        username and password.
+        Initialize a TSquareAPI object.
+        Logs in to TSquare with username and password.
         @param username - The username to log in with
         @param password - The password to log in with. Not stored.
 
+        @returns A TSquareUser object that represents the user that
+                 was logged in.
         @throws TSquareAuthException - If something goes wrong during the
-        authentication process.
+        authentication process (i.e. credentials are bad)
         '''
+        self._authenticated = True
         self.username = username
         self._tg_ticket, self._service_ticket = _get_ticket(username, password)
         self._session = _tsquare_login(self._service_ticket)
-        self._authenticated = True
 
-    @attributes(version_added='0.1',
-                author='Sean Gillespie')
+    @requires_authentication
+    def logout(self):
+        self._session.delete(BASE_URL_GATECH + 'rest/tickets/{}'.format(self._tg_ticket))
+        self._authenticated = False
+        
     @requires_authentication
     def get_user_info(self):
         '''
@@ -76,10 +70,8 @@ class TSquareAPI(object):
         del user_data['password'] # tsquare doesn't store passwords
         return TSquareUser(**user_data)
 
-    @attributes(version_added='0.1',
-                author='Sean Gillespie')
     @requires_authentication
-    def get_sites(self, filter_func=None):
+    def get_sites(self, filter_func=lambda x: True):
         '''
         Returns a list of TSquareSite objects that represent the sites available
         to a user.
@@ -96,20 +88,26 @@ class TSquareAPI(object):
         response = self._session.get(BASE_URL_TSQUARE + 'site.json')
         response.raise_for_status() # raise an exception if not 200: OK
         site_list = response.json()['site_collection']
+        
         if site_list == []:
             # this means that this t-square session expired. It's up
             # to the user to re-authenticate.
             self._authenticated = False
             raise SessionExpiredException('The session has expired')
-        if filter_func:
-            return filter(filter_func,
-                          map(lambda x: TSquareSite(**x), site_list))
-        else:
-            return map(lambda x: TSquareSite(**x), site_list)
-
+        result_list = []
+        for site in site_list:
+            t_site = TSquareSite(**site)
+            if not t_site.props:
+                t_site.props = {}
+            if not 'banner-crn' in t_site.props:
+                t_site.props['banner-crn'] = None
+            if not 'term' in t_site.props:
+                t_site.props['term'] = None
+            if not 'term_eid' in t_site.props:
+                t_site.props['term_eid'] = None
+            result_list.append(t_site)
+        return result_list
             
-    @attributes(version_added='0.1',
-                author='Sean Gillespie')
     @requires_authentication
     def get_announcements(self, site=None, num=10, age=20):
         '''
