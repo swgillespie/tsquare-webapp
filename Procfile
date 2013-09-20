@@ -1,1 +1,1 @@
-web: gunicorn tsquare.wsgi
+web: python manage.py runserver
