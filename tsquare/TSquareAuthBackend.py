@@ -4,9 +4,6 @@ Created on Aug 28, 2013
 @author: Nirav
 '''
 
-from django.contrib.auth.models import User
-from tsquare_api import TSquareAPI, TSquareAuthException
-
 class TSquareAuthBackend(object):
     '''
     classdocs

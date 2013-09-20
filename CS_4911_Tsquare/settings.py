@@ -9,17 +9,16 @@ TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     ('Sean Gillespie', 'sean.william.g@gmail.com'),
+    ('Nirav Bhatia','bnirav23@gmail.com')
     # add your names here!
 )
-
-AUTHENTICATION_BACKENDS = ('tsquare.TSquareAuthBackend.TSquareAuthBackend')
 
 MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': os.path.abspath(os.path.join('..', '.tsquaredb')),                      # Or path to database file if using sqlite3.
+        'NAME': os.path.abspath(os.path.join('..', 'tsquaredb')),                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -117,11 +116,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-<<<<<<< HEAD
     os.path.abspath(os.path.join(ROOT_PATH, '..', 'templates')),
-=======
-    'C:/Users/Nirav/My Documents/Aptana Studio 3 Workspace/CS_4911_Tsquare/CS_4911_Tsquare/tsquare/templates'
->>>>>>> f00dbdc0a1e6b668a685e37e36eee03a3416af08
 )
 
 INSTALLED_APPS = (
@@ -131,6 +126,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'tsquare'
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -165,3 +161,5 @@ LOGGING = {
         },
     }
 }
+
+LOGIN_URL = '/tlogin/'
