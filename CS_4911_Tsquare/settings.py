@@ -12,6 +12,8 @@ ADMINS = (
     # add your names here!
 )
 
+AUTHENTICATION_BACKENDS = ('tsquare.TSquareAuthBackend.TSquareAuthBackend')
+
 MANAGERS = ADMINS
 
 DATABASES = {
@@ -115,7 +117,11 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+<<<<<<< HEAD
     os.path.abspath(os.path.join(ROOT_PATH, '..', 'templates')),
+=======
+    'C:/Users/Nirav/My Documents/Aptana Studio 3 Workspace/CS_4911_Tsquare/CS_4911_Tsquare/tsquare/templates'
+>>>>>>> f00dbdc0a1e6b668a685e37e36eee03a3416af08
 )
 
 INSTALLED_APPS = (
