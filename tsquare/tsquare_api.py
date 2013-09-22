@@ -134,23 +134,6 @@ class TSquareAPI(object):
         request.raise_for_status()
         announcement_list = request.json()['announcement_collection']
         return map(lambda x: TSquareAnnouncement(**x), announcement_list)
-
-    @requires_authentication
-    def get_assignments(self, site):
-        '''
-        Gets a list of assignments associated with a site (class). Returns
-        a list of TSquareAssignment objects.
-        @param site (TSquareSite) - The site to use with the assignment query
-
-        @returns - A list of TSquareSite objects. May be an empty list if
-                   the site has defined no assignments.
-        '''
-        url = BASE_URL_TSQUARE + 'assignment/'
-        
-        url += '{}/'.format(site.id)
-        request = self._session.get(url)
-        request.raise_for_status()
-        
         
 class TSquareUser:
     def __init__(self, **kwargs):
