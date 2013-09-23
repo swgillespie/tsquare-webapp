@@ -1,0 +1,16 @@
+{% load staticfiles %}
+
+<html>
+	<head>
+	<title>TSquare2 - {% block title %}{% endblock %}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
+	<script src={% static "js/jquery-1.10.2.js" %}></script>
+	<script src={% static "js/bootstrap.js" %}></script>
+	</head>
+	<body>
+		{% block content %}
+
+		{% endblock %}
+	</body>
+</html>
