@@ -1,4 +1,5 @@
 import requests
+import HTMLParser
 
 BASE_URL_GATECH = 'https://login.gatech.edu/cas/'
 SERVICE = 'https://t-square.gatech.edu/sakai-login-tool/container'
@@ -10,15 +11,23 @@ class TSquareException(Exception):
 
     def __str__(self):
         return self.message
-        
+
+
 class TSquareAuthException(TSquareException):
     pass
+
 
 class NotAuthenticatedException(TSquareException):
     pass
 
+
 class SessionExpiredException(TSquareException):
     pass
+
+
+class AssignmentParseException(TSquareException):
+    pass
+
 
 class TSquareAPI(object):
     def requires_authentication(func):
@@ -212,8 +221,62 @@ def _get_ticket(username, password):
     service_ticket = response.text
     return ticket, service_ticket
 
+
 def _tsquare_login(service_ticket):
     session = requests.Session()
     # step 3 - redeem the ticket with TSquare and receive authenticated session
     session.get(SERVICE + '?ticket={}'.format(service_ticket))
     return session
+
+
+
+class AssignmentHTMLParser(HTMLParser.HTMLParser):
+
+    _PARSER_STATE = ['WAITING_FOR_H4',
+                     'WAITING_FOR_LINK'
+                     'WAITING_FOR_STATUS',
+                     'WAITING_FOR_OPEN_DATE',
+                     'WAITING_FOR_DUE_DATE']
+
+    def __init__(self):
+        super(AssignmentHTMLParser, self).__init__(self)
+        self._assignments = []
+        self._state = ['WAITING_FOR_H4']
+        self._constructed_obj = {}
+
+    def _assert_state(self, desired_state):
+        return self._state == desired_state
+
+    def handle_starttag(self, tag, attrs):
+        if tag == 'h4':
+            # this is an assignment name
+            if self._assert_state('WAITING_FOR_H4'):
+                self._state = 'WAITING_FOR_LINK'
+        elif tag == 'a':
+            # this is a link
+            if self._assert_state('WAITING_FOR_LINK'):
+                self._constructed_obj['href'] = attrs['href']
+                self._state = 'WAITING_FOR_TITLE'
+
+    def handle_data(self, data):
+        if self._assert_state(self, 'WAITING_FOR_TITLE'):
+            self._constructed_obj['title'] = data
+        elif self._assert_state(self, 'WAITING_FOR_STATUS'):
+            self._constructed_obj['status'] = data
+        elif self._assert_state(self, 'WAITING_FOR_OPEN_DATE'):
+            self._constructed_obj['open_date'] = data
+        elif self._assert_state(self, 'WAITING_FOR_DUE_DATE'):
+            self._constructed_obj['due_date'] = data
+            from copy import deepcopy
+            self._assignments.append(deepcopy(self._constructed_obj))
+            self._constructed_obj = {}
+            self._state = self._PARSER_STATE[0]
+
+    def get_assignments(self, html_input):
+        self.feed(html_input)
+        return self._assignments
+
+    def purge(self):
+        self._assignments = []
+        self._constructed_obj = {}
+        self._state = self._PARSER_STATE[0]
