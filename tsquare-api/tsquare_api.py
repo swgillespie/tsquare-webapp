@@ -19,14 +19,14 @@ class NotAuthenticatedException(TSquareException):
 
 class SessionExpiredException(TSquareException):
     pass
-    
+
 class TSquareAPI(object):
     def requires_authentication(func):
-        '''
+        """
         Function decorator that throws an exception if the user
         is not authenticated, and executes the function normally
         if the user is authenticated.
-        '''
+        """
         def _auth(self, *args, **kwargs):
             if not self._authenticated:
                 raise NotAuthenticatedException('Function {} requires'
@@ -37,7 +37,7 @@ class TSquareAPI(object):
         return _auth
 
     def __init__(self, username, password):
-        '''
+        """
         Initialize a TSquareAPI object.
         Logs in to TSquare with username and password.
         @param username - The username to log in with
@@ -47,7 +47,7 @@ class TSquareAPI(object):
                  was logged in.
         @throws TSquareAuthException - If something goes wrong during the
         authentication process (i.e. credentials are bad)
-        '''
+        """
         self._authenticated = True
         self.username = username
         self._tg_ticket, self._service_ticket = _get_ticket(username, password)
@@ -60,10 +60,10 @@ class TSquareAPI(object):
         
     @requires_authentication
     def get_user_info(self):
-        '''
+        """
         Returns a TSquareUser object representing the currently logged in user.
         Throws a NotAuthenticatedException if the user is not authenticated.
-        '''
+        """
         response = self._session.get(BASE_URL_TSQUARE + '/user/current.json')
         response.raise_for_status() # raises an exception if not 200: OK
         user_data = response.json()
@@ -72,7 +72,7 @@ class TSquareAPI(object):
 
     @requires_authentication
     def get_sites(self, filter_func=lambda x: True):
-        '''
+        """
         Returns a list of TSquareSite objects that represent the sites available
         to a user.
         @param filter_func - A function taking in a Site object as a parameter
@@ -84,12 +84,12 @@ class TSquareAPI(object):
                              If not specified, no filter is applied.
         @returns - A list of TSquareSite objects encapsulating t-square's JSON
                    response.
-        '''
+        """
         response = self._session.get(BASE_URL_TSQUARE + 'site.json')
         response.raise_for_status() # raise an exception if not 200: OK
         site_list = response.json()['site_collection']
         
-        if site_list == []:
+        if site_list:
             # this means that this t-square session expired. It's up
             # to the user to re-authenticate.
             self._authenticated = False
@@ -97,7 +97,7 @@ class TSquareAPI(object):
         result_list = []
         for site in site_list:
             t_site = TSquareSite(**site)
-            if not t_site.props:
+            if not hasattr(t_site, "props"):
                 t_site.props = {}
             if not 'banner-crn' in t_site.props:
                 t_site.props['banner-crn'] = None
@@ -105,12 +105,13 @@ class TSquareAPI(object):
                 t_site.props['term'] = None
             if not 'term_eid' in t_site.props:
                 t_site.props['term_eid'] = None
-            result_list.append(t_site)
+            if filter_func(t_site):
+                result_list.append(t_site)
         return result_list
             
     @requires_authentication
     def get_announcements(self, site=None, num=10, age=20):
-        '''
+        """
         Gets announcements from a site if site is not None, or from every
         site otherwise. Returns a list of TSquareAnnouncement objects.
         @param site_obj (TSquareSite) If non-None, gets only the announcements
@@ -124,7 +125,7 @@ class TSquareAPI(object):
         @returns - A list of TSquareAnnouncement objects. The length will be
                    at most num, and it may be less than num depending on
                    the number of announcements whose age is less than age.
-        '''
+        """
         url = BASE_URL_TSQUARE + 'announcement/'
         if site:
             url += 'site/{}.json?n={}&d={}'.format(site.id, num, age)
@@ -137,14 +138,14 @@ class TSquareAPI(object):
 
     @requires_authentication
     def get_assignments(self, site):
-        '''
+        """
         Gets a list of assignments associated with a site (class). Returns
         a list of TSquareAssignment objects.
         @param site (TSquareSite) - The site to use with the assignment query
 
         @returns - A list of TSquareSite objects. May be an empty list if
                    the site has defined no assignments.
-        '''
+        """
         url = BASE_URL_TSQUARE + 'assignment/'
         
         url += '{}/'.format(site.id)
@@ -154,35 +155,35 @@ class TSquareAPI(object):
         
 class TSquareUser:
     def __init__(self, **kwargs):
-        '''
+        """
         Encapsulates the raw JSON dictionary that represents a user in TSquare.
         Converts a dictionary to attributes of an object for ease of use.
         This constructor should never be called directly; instead, it is
         called by get_user_info.
-        '''
+        """
         for key in kwargs:
             setattr(self, key, kwargs[key])
 
 class TSquareSite:
     def __init__(self, **kwargs):
-        '''
+        """
         Encapsulates the raw JSON dictionary that represents a site in TSquare.
         Converts a dictionary to attributes of an object for ease of use.
         This constructor should never be called directly; instead, it is called
         by get_sites.
-        '''
+        """
         for key in kwargs:
             setattr(self, key, kwargs[key])
 
 class TSquareAnnouncement:
     def __init__(self, **kwargs):
-        '''
+        """
         Encapsulates the raw JSON dictionary that represents an announcement
         in TSquare.
         Converts a dictionary to attributes of an object for ease of use.
         This constructor should never be called directly; instead, it is called
         by get_announcements.
-        '''
+        """
         for key in kwargs:
             setattr(self, key, kwargs[key])
 
@@ -209,7 +210,7 @@ def _get_ticket(username, password):
         raise TSquareAuthException('Received unexpected HTTP code: {}'
                                    .format(response.status_code))
     service_ticket = response.text
-    return (ticket, service_ticket)
+    return ticket, service_ticket
 
 def _tsquare_login(service_ticket):
     session = requests.Session()
