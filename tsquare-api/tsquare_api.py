@@ -96,9 +96,9 @@ class TSquareAPI(object):
         """
         response = self._session.get(BASE_URL_TSQUARE + 'site.json')
         response.raise_for_status() # raise an exception if not 200: OK
+        import pprint
         site_list = response.json()['site_collection']
-        
-        if site_list:
+        if not site_list:
             # this means that this t-square session expired. It's up
             # to the user to re-authenticate.
             self._authenticated = False
@@ -146,6 +146,21 @@ class TSquareAPI(object):
         return map(lambda x: TSquareAnnouncement(**x), announcement_list)
 
     @requires_authentication
+    def get_tools(self, site):
+        """
+        Gets all tools associated with a site.
+        @param site (TSquareSite) - The site to search for tools
+        @returns A list of dictionaries representing Tsquare tools.
+        """
+        # hack - gotta bypass the tsquare REST api because it kinda sucks with tools
+        url = site.entityURL.replace('direct', 'portal')
+        response = self._session.get(url)
+        response.raise_for_status()
+        # scrape the resulting html
+        parser = SiteToolHTMLParser()
+        return parser.get_tools(response.text)
+
+    @requires_authentication
     def get_assignments(self, site):
         """
         Gets a list of assignments associated with a site (class). Returns
@@ -155,12 +170,15 @@ class TSquareAPI(object):
         @returns - A list of TSquareSite objects. May be an empty list if
                    the site has defined no assignments.
         """
-        url = BASE_URL_TSQUARE + 'assignment/'
-        
-        url += '{}/'.format(site.id)
-        request = self._session.get(url)
-        request.raise_for_status()
-        
+        tools = self.get_tools(site)
+        assignment_tool_filter = [x for x in tools if x['name'] == 'assignments']
+        if not assignment_tool_filter:
+            return []
+        assignment_tool_url = assignment_tool_filter[0]['href']
+        response = self._session.get(assignment_tool_url)
+        response.raise_for_status()
+        parser = AssignmentHTMLParser()
+        return parser.get_assignments(response.text)
         
 class TSquareUser:
     def __init__(self, **kwargs):
@@ -229,6 +247,39 @@ def _tsquare_login(service_ticket):
     return session
 
 
+class SiteToolHTMLParser(HTMLParser.HTMLParser):
+
+    def __init__(self):
+        super(SiteToolParser, self).__init__(self)
+        self._tools = []
+
+    def handle_starttag(self, tag, attrs):
+        # if this is a link with a class attribute
+        if tag == 'a' and 'class' in attrs:
+            # look for tools
+            if attrs['class'] == 'icon-sakai-syllabus':
+                self._tools.append({ name: 'syllabus',
+                                     href: attrs['href'],
+                                     desc: attrs['title']})
+            elif attrs['class'] == 'icon-sakai-resources':
+                self._tools.append({ name: 'resources',
+                                     href: attrs['href'],
+                                     desc: attrs['title']})
+            elif attrs['class'] == 'icon-sakai-assignment-grades':
+                self._tools.append({ name: 'assignments',
+                                     href: attrs['href'],
+                                     desc: attrs['title']})
+            elif attrs['class'] == 'icon-sakai-gradebook-tool':
+                self._tools.append({ name: 'grades',
+                                     href: attrs['href'],
+                                     desc: attrs['title']})
+
+    def get_tools(self, html_text):
+        self.feed(html_text)
+        return self._tools
+
+    def purge(self):
+        self._tools = []
 
 class AssignmentHTMLParser(HTMLParser.HTMLParser):
 
