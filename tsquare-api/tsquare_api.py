@@ -1,5 +1,6 @@
 import requests
 import HTMLParser
+from copy import deepcopy
 
 BASE_URL_GATECH = 'https://login.gatech.edu/cas/'
 SERVICE = 'https://t-square.gatech.edu/sakai-login-tool/container'
@@ -174,8 +175,16 @@ class TSquareAPI(object):
         assignment_tool_url = assignment_tool_filter[0].href
         response = self._session.get(assignment_tool_url)
         response.raise_for_status()
-        parser = AssignmentHTMLParser()
-        return parser.get_assignments(response.text)
+        iframes = IFrameParser().get_iframes(response.text)
+        iframe_url = ''
+        for frame in iframes:
+            if frame['title'] == 'Assignments':
+                iframe_url = frame['src']
+        if iframe_url == '':
+            print "WARNING: NO ASSIGNMENT IFRAMES FOUND"
+        response = self._session.get(iframe_url)
+        response.raise_for_status()
+        return AssignmentHTMLParser().get_assignments(response.text)
         
 class TSquareUser:
     def __init__(self, **kwargs):
@@ -221,7 +230,17 @@ class TSquareTool:
         """
         for key in kwargs:
             setattr(self, key, kwargs[key])
-            
+
+class TSquareAssignment:
+    def __init__(self, **kwargs):
+        """
+        Encapsulates the dictionary that this module builds by scraping the
+        Assignments page. An assignment is anything that can be turned
+        in according to TSquare.
+        """
+        for key in kwargs:
+            setattr(self, key, kwargs[key])
+        
 def _get_ticket(username, password):
     # step 1 - get a CAS ticket
     data = { 'username' : username, 'password' : password }
@@ -254,6 +273,23 @@ def _tsquare_login(service_ticket):
     return session
 
 
+class IFrameParser(HTMLParser.HTMLParser):
+    def __init__(self):
+        HTMLParser.HTMLParser.__init__(self)
+        self._iframes = []
+
+    def handle_starttag(self, tag, attrs):
+        first_attr = dict(attrs)
+        if tag == 'iframe':
+            self._iframes.append({ 'name' : first_attr['name'],
+                                   'title': first_attr['title'].strip(),
+                                   'src'  : first_attr['src']})
+
+    def get_iframes(self, html_input):
+        self.feed(html_input)
+        return self._iframes
+    
+    
 class SiteToolHTMLParser(HTMLParser.HTMLParser):
     
     def __init__(self):
@@ -297,44 +333,70 @@ class AssignmentHTMLParser(HTMLParser.HTMLParser):
                      'WAITING_FOR_OPEN_DATE',
                      'WAITING_FOR_DUE_DATE']
 
+    _LEXER_STATE = ['STARTING_STATE',
+                    'NEXT_IS_TITLE',
+                    'NEXT_IS_STATUS',
+                    'NEXT_IS_OPEN_DATE',
+                    'NEXT_IS_DUE_DATE']
+
     def __init__(self):
         HTMLParser.HTMLParser.__init__(self)
         self._assignments = []
-        self._state = ['WAITING_FOR_H4']
+        self._state = 'WAITING_FOR_H4'
+        self._lstate = 'STARTING_STATE'
         self._constructed_obj = {}
 
-    def _assert_state(self, desired_state):
-        return self._state == desired_state
+    def _assert_state(self, desired_state, desired_lstate):
+        return self._state == desired_state and self._lstate == desired_lstate 
 
     def handle_starttag(self, tag, attr):
         first_attr = dict(attr)
         if tag == 'h4':
             # this is an assignment name
-            if self._assert_state('WAITING_FOR_H4'):
+            if self._assert_state('WAITING_FOR_H4', 'STARTING_STATE'):
                 self._state = 'WAITING_FOR_LINK'
         elif tag == 'a':
             # this is a link
-            if self._assert_state('WAITING_FOR_LINK'):
+            if self._assert_state('WAITING_FOR_LINK', 'STARTING_STATE'):
                 self._constructed_obj['href'] = first_attr['href']
                 self._state = 'WAITING_FOR_TITLE'
+                self._lstate = 'NEXT_IS_TITLE'
+        elif tag == 'td':
+            # this is a table
+            if 'headers' in first_attr:
+                if first_attr['headers'] == 'status':
+                    self._lstate = 'NEXT_IS_STATUS'
+                elif first_attr['headers'] == 'openDate':
+                    self._lstate = 'NEXT_IS_OPEN_DATE'
+                elif first_attr['headers'] == 'dueDate':
+                    self._lstate = 'NEXT_IS_DUE_DATE'
 
     def handle_data(self, data):
-        if self._assert_state('WAITING_FOR_TITLE'):
-            self._constructed_obj['title'] = data
-        elif self._assert_state('WAITING_FOR_STATUS'):
-            self._constructed_obj['status'] = data
-        elif self._assert_state('WAITING_FOR_OPEN_DATE'):
-            self._constructed_obj['open_date'] = data
-        elif self._assert_state('WAITING_FOR_DUE_DATE'):
-            self._constructed_obj['due_date'] = data
-            from copy import deepcopy
+        stripped_data = data.strip('\t\n')
+        if len(stripped_data) == 0:
+            return
+        if self._assert_state('WAITING_FOR_TITLE', 'NEXT_IS_TITLE'):
+            self._constructed_obj['title'] = stripped_data
+            self._state = 'WAITING_FOR_STATUS'
+            self._lstate = 'STARTING_STATE'
+        elif self._assert_state('WAITING_FOR_STATUS', 'NEXT_IS_STATUS'):
+            self._constructed_obj['status'] = stripped_data
+            self._state = 'WAITING_FOR_OPEN_DATE'
+            self._lstate = 'STARTING_STATE'
+        elif self._assert_state('WAITING_FOR_OPEN_DATE', 'NEXT_IS_OPEN_DATE'):
+            self._constructed_obj['open_date'] = stripped_data
+            self._state = 'WAITING_FOR_DUE_DATE'
+            self._lstate = 'STARTING_STATE'
+        elif self._assert_state('WAITING_FOR_DUE_DATE', 'NEXT_IS_DUE_DATE'):
+            self._constructed_obj['due_date'] = stripped_data
             self._assignments.append(deepcopy(self._constructed_obj))
             self._constructed_obj = {}
             self._state = self._PARSER_STATE[0]
+            self._lstate = self._LEXER_STATE[0]
 
     def get_assignments(self, html_input):
         self.feed(html_input)
-        return self._assignments
+        return [TSquareAssignment(**x) for x in self._assignments]
 
     def purge(self):
         self._assignments = []
