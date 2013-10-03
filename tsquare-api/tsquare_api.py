@@ -307,7 +307,7 @@ class AssignmentHTMLParser(HTMLParser.HTMLParser):
         return self._state == desired_state
 
     def handle_starttag(self, tag, attr):
-        first_attr = attr[0]
+        first_attr = dict(attr)
         if tag == 'h4':
             # this is an assignment name
             if self._assert_state('WAITING_FOR_H4'):
@@ -319,7 +319,7 @@ class AssignmentHTMLParser(HTMLParser.HTMLParser):
                 self._state = 'WAITING_FOR_TITLE'
 
     def handle_data(self, data):
-        if self._assert_state(self, 'WAITING_FOR_TITLE'):
+        if self._assert_state('WAITING_FOR_TITLE'):
             self._constructed_obj['title'] = data
         elif self._assert_state('WAITING_FOR_STATUS'):
             self._constructed_obj['status'] = data
