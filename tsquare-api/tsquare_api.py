@@ -12,10 +12,8 @@ class TSquareException(Exception):
     def __str__(self):
         return self.message
 
-
 class TSquareAuthException(TSquareException):
     pass
-
 
 class NotAuthenticatedException(TSquareException):
     pass
@@ -96,7 +94,6 @@ class TSquareAPI(object):
         """
         response = self._session.get(BASE_URL_TSQUARE + 'site.json')
         response.raise_for_status() # raise an exception if not 200: OK
-        import pprint
         site_list = response.json()['site_collection']
         if not site_list:
             # this means that this t-square session expired. It's up
@@ -171,10 +168,10 @@ class TSquareAPI(object):
                    the site has defined no assignments.
         """
         tools = self.get_tools(site)
-        assignment_tool_filter = [x for x in tools if x['name'] == 'assignments']
+        assignment_tool_filter = [x for x in tools if x.name == 'assignments']
         if not assignment_tool_filter:
             return []
-        assignment_tool_url = assignment_tool_filter[0]['href']
+        assignment_tool_url = assignment_tool_filter[0].href
         response = self._session.get(assignment_tool_url)
         response.raise_for_status()
         parser = AssignmentHTMLParser()
@@ -214,6 +211,16 @@ class TSquareAnnouncement:
         for key in kwargs:
             setattr(self, key, kwargs[key])
 
+class TSquareTool:
+    def __init__(self, **kwargs):
+        """
+        Encapsulates the raw JSON dictionary that represents a tool in TSquare.
+        A tool is any third party application that TSquare uses to provide a
+        service. In this case, assignments, grades, and resources are the most
+        common tools in use.
+        """
+        for key in kwargs:
+            setattr(self, key, kwargs[key])
             
 def _get_ticket(username, password):
     # step 1 - get a CAS ticket
@@ -248,35 +255,36 @@ def _tsquare_login(service_ticket):
 
 
 class SiteToolHTMLParser(HTMLParser.HTMLParser):
-
+    
     def __init__(self):
-        super(SiteToolParser, self).__init__(self)
+        HTMLParser.HTMLParser.__init__(self)
         self._tools = []
 
     def handle_starttag(self, tag, attrs):
+        first_attr = dict(attrs)
         # if this is a link with a class attribute
-        if tag == 'a' and 'class' in attrs:
+        if tag == 'a' and 'class' in first_attr:
             # look for tools
-            if attrs['class'] == 'icon-sakai-syllabus':
-                self._tools.append({ name: 'syllabus',
-                                     href: attrs['href'],
-                                     desc: attrs['title']})
-            elif attrs['class'] == 'icon-sakai-resources':
-                self._tools.append({ name: 'resources',
-                                     href: attrs['href'],
-                                     desc: attrs['title']})
-            elif attrs['class'] == 'icon-sakai-assignment-grades':
-                self._tools.append({ name: 'assignments',
-                                     href: attrs['href'],
-                                     desc: attrs['title']})
-            elif attrs['class'] == 'icon-sakai-gradebook-tool':
-                self._tools.append({ name: 'grades',
-                                     href: attrs['href'],
-                                     desc: attrs['title']})
+            if first_attr['class'].strip() == 'icon-sakai-syllabus':
+                self._tools.append({ 'name': 'syllabus',
+                                     'href': first_attr['href'],
+                                     'desc': first_attr['title']})
+            elif first_attr['class'].strip() == 'icon-sakai-resources':
+                self._tools.append({ 'name': 'resources',
+                                     'href': first_attr['href'],
+                                     'desc': first_attr['title']})
+            elif first_attr['class'].strip() == 'icon-sakai-assignment-grades':
+                self._tools.append({ 'name': 'assignments',
+                                     'href': first_attr['href'],
+                                     'desc': first_attr['title']})
+            elif first_attr['class'].strip() == 'icon-sakai-gradebook-tool':
+                self._tools.append({ 'name': 'grades',
+                                     'href': first_attr['href'],
+                                     'desc': first_attr['title']})
 
     def get_tools(self, html_text):
         self.feed(html_text)
-        return self._tools
+        return [TSquareTool(**x) for x in self._tools]
 
     def purge(self):
         self._tools = []
@@ -290,7 +298,7 @@ class AssignmentHTMLParser(HTMLParser.HTMLParser):
                      'WAITING_FOR_DUE_DATE']
 
     def __init__(self):
-        super(AssignmentHTMLParser, self).__init__(self)
+        HTMLParser.HTMLParser.__init__(self)
         self._assignments = []
         self._state = ['WAITING_FOR_H4']
         self._constructed_obj = {}
@@ -298,7 +306,8 @@ class AssignmentHTMLParser(HTMLParser.HTMLParser):
     def _assert_state(self, desired_state):
         return self._state == desired_state
 
-    def handle_starttag(self, tag, attrs):
+    def handle_starttag(self, tag, attr):
+        first_attr = attr[0]
         if tag == 'h4':
             # this is an assignment name
             if self._assert_state('WAITING_FOR_H4'):
@@ -306,17 +315,17 @@ class AssignmentHTMLParser(HTMLParser.HTMLParser):
         elif tag == 'a':
             # this is a link
             if self._assert_state('WAITING_FOR_LINK'):
-                self._constructed_obj['href'] = attrs['href']
+                self._constructed_obj['href'] = first_attr['href']
                 self._state = 'WAITING_FOR_TITLE'
 
     def handle_data(self, data):
         if self._assert_state(self, 'WAITING_FOR_TITLE'):
             self._constructed_obj['title'] = data
-        elif self._assert_state(self, 'WAITING_FOR_STATUS'):
+        elif self._assert_state('WAITING_FOR_STATUS'):
             self._constructed_obj['status'] = data
-        elif self._assert_state(self, 'WAITING_FOR_OPEN_DATE'):
+        elif self._assert_state('WAITING_FOR_OPEN_DATE'):
             self._constructed_obj['open_date'] = data
-        elif self._assert_state(self, 'WAITING_FOR_DUE_DATE'):
+        elif self._assert_state('WAITING_FOR_DUE_DATE'):
             self._constructed_obj['due_date'] = data
             from copy import deepcopy
             self._assignments.append(deepcopy(self._constructed_obj))
