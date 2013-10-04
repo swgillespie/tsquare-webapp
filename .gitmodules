@@ -1,0 +1,3 @@
+[submodule "tsquare-module"]
+	path = tsquare-module
+	url = https://github.com/swgillespie/tsquare.git
