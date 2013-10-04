@@ -4,3 +4,4 @@ from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
 	user = models.ForeignKey(User)
+	github_access_token = models.CharField(max_length=255)
