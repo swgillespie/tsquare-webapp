@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}Assignments{% endblock %}
+
+{% block content %}
+
+<div class="container">
+      
+  <h1>Assignment List</h1>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <tr>
+          <th>Assignment</th>
+          <th>Status</th>
+          <th>Due</th>
+        </tr>
+        <tr>
+          <td>Homework 1</td>
+          <td>Submitted Sep 10, 2013 3:00 pm</td>
+          <td>Sep 13, 2013 5:00 pm</td>
+        </tr>
+        <tr>
+          <td>Homework 2</td>
+          <td>Submitted Sep 17, 2013 1:30 pm</td>
+          <td>Sep 24, 2013 5:00 pm</td>
+        </tr>
+        <tr>
+          <td>Homework 3</td>
+          <td>Not Submitted</td>
+          <td>Sep 30, 2013 5:00 pm</td>
+        </tr>
+      </table>
+    </div>
+
+</div> <!-- /container -->
+
+{% endblock %}
