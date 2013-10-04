@@ -22,8 +22,8 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Courses <b class="caret"></b></a>
-              <ul class="dropdown-menu">
+              <a href="#" id="drop1" class="btn dropdown-toggle" data-toggle="dropdown"> Courses <b class="caret"></b></a>
+              <ul class="dropdown-menu" aria-labelledby="drop1">
                 <li><a href="#">CS 3790</a></li>
                 <li><a href="#">CS 2110</a></li>
                 <li><a href="#">PSYC 3000</a></li>
@@ -33,8 +33,8 @@
             </li>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown2">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Tools <b class="caret"></b></a>
-              <ul class="dropdown-menu">
+              <a href="#" id="drop2" class="btn dropdown-toggle" data-toggle="dropdown"> Tools <b class="caret"></b></a>
+              <ul class="dropdown-menu" aria-labelledby="drop2">
                 <li><a href="#">Syllabus</a></li>
                 <li><a href="#">Announcements</a></li>
                 <li><a href="#">Assignments</a></li>
@@ -53,6 +53,7 @@
 
 		{% endblock %}
 
+    <!--Moved to end for faster page loading-->
 		<script src={% static "js/jquery-1.10.2.js" %}></script>
 		<script src={% static "js/bootstrap.js" %}></script>
 	</body>
