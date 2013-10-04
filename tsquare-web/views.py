@@ -1,12 +1,12 @@
 # Create your views here.
 
 from django.shortcuts import render,render_to_response,redirect
-from tsquare_api import TSquareAPI, TSquareAuthException
+from tsquare import TSquareAPI, TSquareAuthException
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from tsquare.models import *
+from models import *
 import urllib
 import requests
 
@@ -55,7 +55,7 @@ def home(request):
 @login_required
 def github_login(request):
 	u = 'https://github.com/login/oauth/authorize'
-	params = {# add client id here}
+	params = {'client_id' : '9a5505bd7e9f1db972e5'}
 	url = u+"?"+urllib.urlencode(params)
 	return redirect(url)
 
@@ -64,7 +64,9 @@ def github_login_exchange(request):
 	u = 'https://github.com/login/oauth/access_token'
 	params = {
 		# add client id and secret here
-		'code':request.GET['code']
+		'code':request.GET['code'],
+        'client_id' : '9a5505bd7e9f1db972e5',
+        'client_secret' : '04f73195dd350a52f509874262b0163aa375381e'
 		}
 	
 	access_token = requests.post(u,data=params)
