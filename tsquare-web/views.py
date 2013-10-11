@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from models import *
 import urllib
 import requests
+import os
 
 def tlogin(request):
 	if(request.method == 'POST'):
@@ -16,6 +17,7 @@ def tlogin(request):
 		password = request.POST['password']
 		try:
 		    tsapi = TSquareAPI(username, password)
+		    request.session['tsapi'] = tsapi
 		except TSquareAuthException:
 		    return render(request,'login.html')
 		try:
@@ -55,18 +57,24 @@ def home(request):
 @login_required
 def github_login(request):
 	u = 'https://github.com/login/oauth/authorize'
-	params = {'client_id' : '9a5505bd7e9f1db972e5'}
+	module_dir = os.path.dirname(__file__)  # get current directory
+	filepath = os.path.join(module_dir, 'github_config.txt')
+	lines = open(filepath).read().splitlines()
+	params = {'client_id' : lines[0]}
 	url = u+"?"+urllib.urlencode(params)
 	return redirect(url)
 
 @login_required
 def github_login_exchange(request):
 	u = 'https://github.com/login/oauth/access_token'
+	module_dir = os.path.dirname(__file__)  # get current directory
+        filepath = os.path.join(module_dir, 'github_config.txt')
+        lines = open(filepath).read().splitlines()
 	params = {
 		# add client id and secret here
 		'code':request.GET['code'],
-        'client_id' : '9a5505bd7e9f1db972e5',
-        'client_secret' : '04f73195dd350a52f509874262b0163aa375381e'
+        'client_id' : lines[0],
+        'client_secret' : lines[1]
 		}
 	
 	access_token = requests.post(u,data=params)
@@ -86,3 +94,12 @@ def select_github_repos(request):
 @login_required
 def setup_profile(request):
 	return render(request,'setup_profile.html')
+
+@login_required
+def list_assignments(request):
+	tsapi = request.session['tsapi']
+	sites = tsapi.get_sites()
+	assignments = []
+	for s in sites:
+		assignments.append(tsapi.get_assignments(s))
+	return HttpResponse(s)
