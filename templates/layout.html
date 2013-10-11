@@ -9,16 +9,44 @@
 	</head>
 	<body>
 		<!-- Static navbar -->
-    <div class="navbar navbar navbar-static-top">
-      <ul class="nav nav-pills">
-
-        <li class="disabled"><h5 href="#">T-Square</h5></li>
-        <li><a></a></li>
-        <li class="active"><a href="/home/">Home</a></li>
-        <li><a href="/assignments/">Assignments</a></li>
-        <li class="disabled"><a href="/profile/">Profile</a></li>
-	<li><a href="/tlogout">Logout</a></li>
-      </ul>
+    <div class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">T-Square</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a href="#" id="drop1" class="btn dropdown-toggle" data-toggle="dropdown"> Courses <b class="caret"></b></a>
+              <ul class="dropdown-menu" aria-labelledby="drop1">
+                <li><a href="#">CS 3790</a></li>
+                <li><a href="#">CS 2110</a></li>
+                <li><a href="#">PSYC 3000</a></li>
+                <li><a href="#">HIST 1100</a></li>
+                <li><a href="#">MUSI 2002</a></li>
+              </ul>
+            </li>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown2">
+              <a href="#" id="drop2" class="btn dropdown-toggle" data-toggle="dropdown"> Tools <b class="caret"></b></a>
+              <ul class="dropdown-menu" aria-labelledby="drop2">
+                <li><a href="#">Syllabus</a></li>
+                <li><a href="#">Announcements</a></li>
+                <li><a href="#">Assignments</a></li>
+                <li><a href="#">Resources</a></li>
+                <li><a href="#">Gradebook</a></li>
+                <li><a href="#">Wiki</a></li>
+                <li><a href="#">Preferences</a></li>
+              </ul>  
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
     </div>
     <br></br>
 
