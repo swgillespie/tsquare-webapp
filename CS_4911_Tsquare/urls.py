@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     url(r'^github/repos/select/$','tsquare.views.select_github_repos'),
     url(r'^github_login/$','tsquare.views.github_login'),
     url(r'^github_login_exchange/$','tsquare.views.github_login_exchange'),
+    url(r'^list_assignments/$','tsquare.views.list_assignments')
     # url(r'^CS_4911_Tsquare/', include('CS_4911_Tsquare.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

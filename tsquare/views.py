@@ -16,6 +16,7 @@ def tlogin(request):
 		password = request.POST['password']
 		try:
 		    tsapi = TSquareAPI(username, password)
+		    request.session['tsapi'] = tsapi
 		except TSquareAuthException:
 		    return render(request,'login.html')
 		try:
@@ -55,7 +56,7 @@ def home(request):
 @login_required
 def github_login(request):
 	u = 'https://github.com/login/oauth/authorize'
-	params = {# add client id here}
+	params = {} # add client_id here
 	url = u+"?"+urllib.urlencode(params)
 	return redirect(url)
 
@@ -84,3 +85,12 @@ def select_github_repos(request):
 @login_required
 def setup_profile(request):
 	return render(request,'setup_profile.html')
+
+@login_required
+def list_assignments(request):
+	tsapi = request.session['tsapi']
+	sites = tsapi.get_sites()
+	assignments = []
+	for s in sites:
+		assignments.append(tsapi.get_assignments(s))
+	return HttpResponse(s)
