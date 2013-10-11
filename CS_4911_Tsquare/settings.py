@@ -9,7 +9,8 @@ TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     ('Sean Gillespie', 'sean.william.g@gmail.com'),
-    ('Nirav Bhatia','bnirav23@gmail.com')
+    ('Nirav Bhatia','bnirav23@gmail.com'),
+    ('Cameron Guthrie', 'camerongu3@gmail.com')
     # add your names here!
 )
 

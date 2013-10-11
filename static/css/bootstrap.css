@@ -773,6 +773,7 @@ h2 {
 
 h3 {
   font-size: 24.5px;
+  text-align: center;
 }
 
 h4 {
@@ -1025,7 +1026,8 @@ pre code {
 }
 
 form {
-  margin: 0 0 20px;
+  margin: 0 auto;
+  width: 250px;
 }
 
 fieldset {

@@ -49,14 +49,22 @@ def tlogout(request):
 def index(request):
 	return render_to_response('index.html')
 
-@login_required	
+@login_required
 def home(request):
 	return render_to_response('home.html')
 
 @login_required
+def profile(request):
+	return render_to_response('profile.html')
+
+@login_required
+def assignments(request):
+	return render_to_response('assignments.html')
+
+@login_required
 def github_login(request):
 	u = 'https://github.com/login/oauth/authorize'
-	params = {'client_id' : '9a5505bd7e9f1db972e5'}
+	params = {} # add client id here
 	url = u+"?"+urllib.urlencode(params)
 	return redirect(url)
 
@@ -66,9 +74,7 @@ def github_login_exchange(request):
 
 	params = {
 		# add client id and secret here
-		'code':request.GET['code'],
-        'client_id' : '9a5505bd7e9f1db972e5',
-        'client_secret' : '04f73195dd350a52f509874262b0163aa375381e'
+		'code':request.GET['code']
 		}
 	
 	access_token = requests.post(u,data=params)
