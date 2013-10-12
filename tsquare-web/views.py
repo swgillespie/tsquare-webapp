@@ -1,12 +1,12 @@
 # Create your views here.
 
 from django.shortcuts import render,render_to_response,redirect
-from tsquare_api import TSquareAPI, TSquareAuthException
+from tsquare.core import TSquareAPI, TSquareAuthException
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from tsquare.models import *
+from models import *
 import urllib
 import requests
 
