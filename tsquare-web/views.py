@@ -96,10 +96,13 @@ def setup_profile(request):
 	return render(request,'setup_profile.html')
 
 @login_required
+def profile(request):
+	return render(request,'profile.html')
+
+@login_required
 def list_assignments(request):
 	tsapi = request.session['tsapi']
 	sites = tsapi.get_sites()
-	assignments = []
 	for s in sites:
-		assignments.append(tsapi.get_assignments(s))
-	return HttpResponse(s)
+		for property, value in vars(s).iteritems():
+		 print property, ": ", value
