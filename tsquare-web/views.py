@@ -9,7 +9,6 @@ from django.http import HttpResponse
 from models import *
 import urllib
 import requests
-import os
 
 def tlogin(request):
 	if(request.method == 'POST'):
@@ -57,24 +56,19 @@ def home(request):
 @login_required
 def github_login(request):
 	u = 'https://github.com/login/oauth/authorize'
-	module_dir = os.path.dirname(__file__)  # get current directory
-	filepath = os.path.join(module_dir, 'github_config.txt')
-	lines = open(filepath).read().splitlines()
-	params = {'client_id' : lines[0]}
+	params = {'client_id' : '9a5505bd7e9f1db972e5'}
 	url = u+"?"+urllib.urlencode(params)
 	return redirect(url)
 
 @login_required
 def github_login_exchange(request):
 	u = 'https://github.com/login/oauth/access_token'
-	module_dir = os.path.dirname(__file__)  # get current directory
-        filepath = os.path.join(module_dir, 'github_config.txt')
-        lines = open(filepath).read().splitlines()
+
 	params = {
 		# add client id and secret here
 		'code':request.GET['code'],
-        'client_id' : lines[0],
-        'client_secret' : lines[1]
+        'client_id' : '9a5505bd7e9f1db972e5',
+        'client_secret' : '04f73195dd350a52f509874262b0163aa375381e'
 		}
 	
 	access_token = requests.post(u,data=params)
@@ -103,6 +97,7 @@ def profile(request):
 def list_assignments(request):
 	tsapi = request.session['tsapi']
 	sites = tsapi.get_sites()
+	assignments = []
 	for s in sites:
-		for property, value in vars(s).iteritems():
-		 print property, ": ", value
+		assignments.append(tsapi.get_assignments(s))
+	return HttpResponse(s)
