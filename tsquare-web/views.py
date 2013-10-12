@@ -56,7 +56,7 @@ def home(request):
 @login_required
 def github_login(request):
 	u = 'https://github.com/login/oauth/authorize'
-	params = {} # add client_id here
+	params = {'client_id' : '9a5505bd7e9f1db972e5'}
 	url = u+"?"+urllib.urlencode(params)
 	return redirect(url)
 
@@ -65,7 +65,9 @@ def github_login_exchange(request):
 	u = 'https://github.com/login/oauth/access_token'
 	params = {
 		# add client id and secret here
-		'code':request.GET['code']
+		'code':request.GET['code'],
+        'client_id' : '9a5505bd7e9f1db972e5',
+        'client_secret' : '04f73195dd350a52f509874262b0163aa375381e'
 		}
 	
 	access_token = requests.post(u,data=params)
