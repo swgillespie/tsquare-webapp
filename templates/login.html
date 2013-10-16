@@ -4,21 +4,22 @@
 
 {% block content %}
 
-<h3>TSquare2 - Login</h3>
+<div class="container">
+<div class="jumbotron">
 
-<form action="" method="POST">
-	{% csrf_token %}
-  <table>
-    <tr>
-      <td>Username</td>
-      <td><input type="text" name="username" placeholder="Username" /></td>
-    </tr>
-    <tr>
-      <td>Password</td>
-      <td><input type="password" name="password" placeholder="Password" /></td>
-    </tr>
-  </table>
-  <input type="submit" value="Login" class="btn btn-default" />
-</form>
+  <form class="form-signin" action="" method="POST">
+  	{% csrf_token %}
+    <h3>TSquare2 - Login</h3>
+    <input type="text" name="username" class="form-control" placeholder="Username" />
+    <input type="password" name="password" class="form-control" placeholder="Password" />
+    <!--TBA
+    <label class="checkbox">
+      <input type="checkbox" value="remember-me"> Remember me
+    </label>-->
+    <button class="btn btn-primary btn-lg btn-block" type="submit" value="Login">Login</button>
+  </form>
+
+</div>
+</div>
 
 {% endblock %} 
