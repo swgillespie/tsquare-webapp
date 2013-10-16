@@ -5,9 +5,11 @@
 	<title>TSquare2 - {% block title %}{% endblock %}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
-	
+  <link href="{% static "navbar-static-top.css" %}" rel="stylesheet">
+
 	</head>
 	<body>
+
 		<!-- Static navbar -->
     <div class="navbar navbar-inverse navbar-static-top">
       <div class="container">
@@ -21,31 +23,14 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="dropdown">
-              <a href="#" id="drop1" class="btn dropdown-toggle" data-toggle="dropdown"> Courses <b class="caret"></b></a>
-              <ul class="dropdown-menu" aria-labelledby="drop1">
-                <li><a href="#">CS 3790</a></li>
-                <li><a href="#">CS 2110</a></li>
-                <li><a href="#">PSYC 3000</a></li>
-                <li><a href="#">HIST 1100</a></li>
-                <li><a href="#">MUSI 2002</a></li>
-              </ul>
-            </li>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown2">
-              <a href="#" id="drop2" class="btn dropdown-toggle" data-toggle="dropdown"> Tools <b class="caret"></b></a>
-              <ul class="dropdown-menu" aria-labelledby="drop2">
-                <li><a href="#">Syllabus</a></li>
-                <li><a href="#">Announcements</a></li>
-                <li><a href="#">Assignments</a></li>
-                <li><a href="#">Resources</a></li>
-                <li><a href="#">Gradebook</a></li>
-                <li><a href="#">Wiki</a></li>
-                <li><a href="#">Preferences</a></li>
-              </ul>  
-            </li>
+            <li class="active"><a href="/home/">Home</a></li>
+            <li><a href="/assignments/">Assignments</a></li>
+            <li><a href="/profile/">Profile</a></li>
           </ul>
-        </div><!--/.nav-collapse -->
+          <ul>
+            <li><p class="navbar-text pull-right">Signed in as <a href="/profile/" class="navbar-link">Student Name</a></p></li>
+          </ul>
+        </div>
       </div>
     </div>
     <br></br>
@@ -57,5 +42,6 @@
     <!--Moved to end for faster page loading-->
 		<script src={% static "js/jquery-1.10.2.js" %}></script>
 		<script src={% static "js/bootstrap.js" %}></script>
+
 	</body>
 </html>
