@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block title %}Gradebook{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+  <div class="header">
+    <h5>Course Grade : Not yet available</h5>
+    <h4>Gradebook Items</h4>
+    <!--list the number of assignments being viewed here?-->
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="row-header">
+        <!--click header to change sort order?-->
+        <div class="col-xs-2"><a href="#">Title</a></div>
+        <div class="col-xs-2"><a href="#">Due Date</a></div>
+        <div class="col-xs-2"><a href="#">Grade</a></div>
+        <div class="col-xs-2"><a href="#">Weight</a></div> <!--not always displayed-->
+        <div class="col-xs-2"><a href="#">Comment</a></div>
+      </div>
+      <hr></hr>
+
+      <div class="row">
+        <div class="col-xs-2"><a href="#">Homework 1</a></div>
+        <div class="col-xs-2">Sep 10, 2013</div>
+        <div class="col-xs-2">100%</div>
+        <div class="col-xs-2"></div>
+        <div class="col-xs-2"></div>
+      </div>
+      <div class="row">
+        <div class="col-xs-2"><a href="#">Homework 2</a></div>
+        <div class="col-xs-2">Sep 10, 2013</div>
+        <div class="col-xs-2">100%</div>
+        <div class="col-xs-2"></div>
+        <div class="col-xs-2"></div>
+      </div>
+      <div class="row">
+        <div class="col-xs-2"><a href="#">Homework 3</a></div>
+        <div class="col-xs-2">Sep 10, 2013</div>
+        <div class="col-xs-2">100%</div>
+        <div class="col-xs-2"></div>
+        <div class="col-xs-2"></div>
+      </div>
+    </div>
+  </div>
+
+</div> <!-- /container -->
+
+{% endblock %}

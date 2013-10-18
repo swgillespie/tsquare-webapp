@@ -62,6 +62,14 @@ def assignments(request):
 	return render_to_response('assignments.html')
 
 @login_required
+def resources(request):
+	return render_to_response('resources.html')
+
+@login_required
+def gradebook(request):
+	return render_to_response('gradebook.html')
+
+@login_required
 def github_login(request):
 	u = 'https://github.com/login/oauth/authorize'
 	params = {} # add client id here

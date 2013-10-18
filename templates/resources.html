@@ -5,47 +5,52 @@
 {% block content %}
 
 <div class="container">
-  <h2>Location: ECON 2015-BH2 Resources</h2>
-  <p>
-  <!--connect to js-->
-  <button type="button" class="btn btn-default btn-xs">Up</button> 
-  </p>
-  <br>
-  <div class="table-responsive">
-    <table class="table table-striped">
-      <tr>
-        <th>Title</th> <!--titles are buttons that sort list-->
-        <th>Action</th>
-        <th>Access</th>
-        <th>Created By</th>
-        <th>Modified</th> <!--not always displayed-->
-        <th>Size</th>
-      </tr>
-      <tr>
-        <td>Syllabus</td>
-        <td></td>
-        <td>Entire site</td>
-        <td>Professor</td>
-        <td>Aug 17, 2013</td>
-        <td>1 item</td>
-      </tr>
-      <tr>
-        <td>Lecture</td>
-        <td></td>
-        <td>Entire site</td>
-        <td>Professor</td>
-        <td>Aug 20, 2013</td>
-        <td>5 items</td>
-      </tr>
-      <tr>
-        <td>Study Guides</td>
-        <td></td>
-        <td>Entire site</td>
-        <td>Professor</td>
-        <td>Jan 2, 2013</td>
-        <td>2 items</td>
-      </tr>
-    </table>
+
+  <div class="header">
+    <h4>
+      Location: {Course Name} Resources &nbsp;
+      <button type="button" class="btn btn-default btn-xs">Up</button> <!--change to or add icon-->
+    </h4>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="row-header">
+        <!--click header to change sort order?-->
+        <div class="col-xs-2"><a href="#">Title</a></div>
+        <div class="col-xs-2"><a href="#">Action</a></div>
+        <div class="col-xs-2"><a href="#">Access</a></div>
+        <div class="col-xs-2"><a href="#">Created By</a></div>
+        <div class="col-xs-2"><a href="#">Modified</a></div> <!--not always displayed-->
+        <div class="col-xs-2"><a href="#">Size</a></div>
+      </div>
+      <hr></hr>
+
+      <div class="row">
+        <div class="col-xs-2"><a href="#">Syllabus</a></div>
+        <div class="col-xs-2"></div>
+        <div class="col-xs-2">Entire Site</div>
+        <div class="col-xs-2">Professor</div>
+        <div class="col-xs-2">Aug 17, 2013</div>
+        <div class="col-xs-2">1 item</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-2"><a href="#">Lecture</a></div>
+        <div class="col-xs-2"></div>
+        <div class="col-xs-2">Entire Site</div>
+        <div class="col-xs-2">Professor</div>
+        <div class="col-xs-2">Aug 17, 2013</div>
+        <div class="col-xs-2">1 item</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-2"><a href="#">Study Guides</a></div>
+        <div class="col-xs-2"></div>
+        <div class="col-xs-2">Entire Site</div>
+        <div class="col-xs-2">Professor</div>
+        <div class="col-xs-2">Aug 17, 2013</div>
+        <div class="col-xs-2">1 item</div>
+      </div>
+    </div>
   </div>
 
 </div> <!-- /container -->
