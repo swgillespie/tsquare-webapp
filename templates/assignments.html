@@ -5,32 +5,39 @@
 {% block content %}
 
 <div class="container">
+  <div class="header">
+    <h4>Assignment List</h4>
+    <!--list the number of assignments being viewed here?-->
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="row-header">
+        <!--click header to change sort order?-->
+        <div class="col-xs-4"><a href="#">Assignments</a></div>
+        <div class="col-xs-4"><a href="#">Status</a></div>
+        <!--<div class="col-xs-4"><strong>Open</strong></div>-->
+        <div class="col-xs-4"><a href="#">Due</a></div>
+      </div>
+      <hr></hr>
       
-  <h1>Assignment List</h1>
-    <div class="table-responsive">
-      <table class="table table-striped">
-        <tr>
-          <th>Assignment</th>
-          <th>Status</th>
-          <th>Due</th>
-        </tr>
-        <tr>
-          <td>Homework 1</td>
-          <td>Submitted Sep 10, 2013 3:00 pm</td>
-          <td>Sep 13, 2013 5:00 pm</td>
-        </tr>
-        <tr>
-          <td>Homework 2</td>
-          <td>Submitted Sep 17, 2013 1:30 pm</td>
-          <td>Sep 24, 2013 5:00 pm</td>
-        </tr>
-        <tr>
-          <td>Homework 3</td>
-          <td>Not Submitted</td>
-          <td>Sep 30, 2013 5:00 pm</td>
-        </tr>
-      </table>
+      <div class="row">
+        <div class="col-xs-4"><a href="/assignment_detail/">Homework 1</a></div>
+        <div class="col-xs-4">Submitted Sep 10, 2013 3:00 pm</div>
+        <div class="col-xs-4">Sep 13, 2013 5:00 pm</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-4"><a href="/assignment_detail/">Homework 1</a></div>
+        <div class="col-xs-4">Submitted Sep 10, 2013 3:00 pm</div>
+        <div class="col-xs-4">Sep 13, 2013 5:00 pm</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-4"><a href="/assignment_detail/">Homework 1</a></div>
+        <div class="col-xs-4">Submitted Sep 10, 2013 3:00 pm</div>
+        <div class="col-xs-4">Sep 13, 2013 5:00 pm</div>
+      </div>
     </div>
+  </div>
 
 </div> <!-- /container -->
 
