@@ -1287,9 +1287,11 @@ pre code {
 table {
   max-width: 100%;
   background-color: transparent;
+  font-size: 14px;
 }
 th {
   text-align: left;
+  text-decoration: bold;
 }
 .table {
   width: 100%;
