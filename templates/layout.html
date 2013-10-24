@@ -19,7 +19,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/"><img src="{% static "tsquare_logo.png" %}" height=50px width=70px></a>
+          <a class="navbar-brand" href="/home/"><img src="{% static "tsquare_logo.png" %}" height=50px width=70px></a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -29,7 +29,7 @@
                 <li class="divider"></li>
                 <li><a href="/course_info/">Course Info</a></li>
                 <li><a href="/announcements/">Announcements</a></li>
-                <li><a href="/assignments/">Assignments</a></li>
+                <li><a href="/list_assignments/">Assignments</a></li>
                 <li><a href="/resources/">Resources</a></li>
                 <li><a href="/gradebook/">Gradebook</a></li>
                 <li><a href="/wiki/">Wiki</a></li>
@@ -43,14 +43,17 @@
                 <li><a href="#">TBA</a></li>
               </ul>
             </li>
-          </ul>
-          <ul>
-            <!--<li><p class="navbar-text pull-right">Signed in as <a href="/profile/" class="navbar-link">Student Name</a></p></li>-->
-            <!--preferences gear icon-->
-            <!--logout door shutting icon-->
-
+            <li>
+              <a href="/tlogout/"><span class="glyphicon glyphicon-eject"></span></a>
+            </li>
           </ul>
         </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="panel panel-default">
+        <h6>&nbsp; Current Course: None</h6>
       </div>
     </div>
 
