@@ -10,6 +10,11 @@ from models import *
 import urllib
 import requests
 
+GITHUB_BASE_AUTH_URL = 'https://github.com/login/oauth/authorize'
+GITHUB_AUTH_EXCHANGE = 'https://github.com/login/oauth/access_token'
+GOOGLE_BASE_AUTH_URL = 'https://accounts.google.com/o/oauth2/auth'
+
+
 def tlogin(request):
 	if(request.method == 'POST'):
 		username = request.POST['username']
@@ -71,18 +76,18 @@ def gradebook(request):
 
 @login_required
 def github_login(request):
-	u = 'https://github.com/login/oauth/authorize'
 	f = open('github_config.txt','r')
 	lines = f.readlines()
+	f.close()
 	params = {'client_id':lines[0].strip('\n')} # add client id here
-	url = u+"?"+urllib.urlencode(params)
+	url = GITHUB_BASE_AUTH_URL+"?"+urllib.urlencode(params)
 	return redirect(url)
 
 @login_required
 def github_login_exchange(request):
-	u = 'https://github.com/login/oauth/access_token'
 	f = open('github_config.txt','r')
 	lines = f.readlines()
+	f.close()
 	params = {
 		# add client id and secret here
 		'client_id':lines[0].strip('\n'),
@@ -90,7 +95,7 @@ def github_login_exchange(request):
 		'code':request.GET['code']
 		}
 	
-	access_token = requests.post(u,data=params)
+	access_token = requests.post(GITHUb_AUTH_EXCHANGE,data=params)
 	profile = UserProfile.objects.get(user_id=request.user.id)
 	if len(profile.github_access_token) == 0:
 		profile.github_access_token = access_token.text
@@ -103,6 +108,22 @@ def select_github_repos(request):
 	if len(profile.github_access_token) == 0:
 		return redirect('/setup_profile')
 	return redirect('https://api.github.com/user/repos?'+profile.github_access_token)
+
+# https://developers.google.com/accounts/docs/OAuth2Login
+def google_login(request):
+	f = open('google_config.txt','r')
+	lines = f.readlines()
+	f.close()
+	params = {
+		'client_id':lines[0], 
+		'response_type':'code',
+		'scope':'openid, email, https://www.googleapis.com/auth/drive',
+		'redirect_uri':GOOGLE_EXCHANGE_REDIRECT_URI
+	}
+	return redirect(GOOGLE_BASE_AUTH_URL+"?"+urllib.urlencode(params))
+
+def google_login_exchange(request):
+	pass
 
 @login_required
 def setup_profile(request):

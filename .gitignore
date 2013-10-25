@@ -45,3 +45,7 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+# External Services Config Files
+tsquare-web/github_config.txt
+tsquare-web/google_config.txt
