@@ -72,16 +72,21 @@ def gradebook(request):
 @login_required
 def github_login(request):
 	u = 'https://github.com/login/oauth/authorize'
-	params = {} # add client id here
+	f = open('github_config.txt','r')
+	lines = f.readlines()
+	params = {'client_id':lines[0].strip('\n')} # add client id here
 	url = u+"?"+urllib.urlencode(params)
 	return redirect(url)
 
 @login_required
 def github_login_exchange(request):
 	u = 'https://github.com/login/oauth/access_token'
-
+	f = open('github_config.txt','r')
+	lines = f.readlines()
 	params = {
 		# add client id and secret here
+		'client_id':lines[0].strip('\n'),
+		'client_secret':lines[1].strip('\n'),
 		'code':request.GET['code']
 		}
 	
