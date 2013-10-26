@@ -58,10 +58,6 @@ def profile(request):
 	return render_to_response('profile.html')
 
 @login_required
-def assignments(request):
-	return render_to_response('assignments.html')
-
-@login_required
 def resources(request):
 	return render_to_response('resources.html')
 
@@ -115,3 +111,19 @@ def list_assignments(request):
 	for s in sites:
 		assignments.append(tsapi.get_assignments(s))
 	return HttpResponse(s)
+
+@login_required
+def course_info(request):
+	return render_to_response('course_info.html')
+
+@login_required
+def announcements(request):
+	return render_to_response('announcements.html')
+
+@login_required
+def wiki(request):
+	return render_to_response('wiki.html')
+
+@login_required
+def help(request):
+	return render_to_response('help.html')
