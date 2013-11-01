@@ -1,7 +1,7 @@
 # Create your views here.
 
 from django.shortcuts import render,render_to_response,redirect
-from tsquare.core import TSquareAPI, TSquareAuthException
+from tsquare_api import TSquareAPI, TSquareAuthException
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -127,3 +127,7 @@ def wiki(request):
 @login_required
 def help(request):
 	return render_to_response('help.html')
+
+@login_required
+def assignment_detail(request):
+	return render_to_response('assignment_detail.html')
