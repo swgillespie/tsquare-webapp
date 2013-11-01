@@ -9,7 +9,9 @@
   <div class="header">
     <h4>
       Location: {Course Name} Resources &nbsp;
-      <button type="button" class="btn btn-default btn-xs">Up</button> <!--change to or add icon-->
+      <button type="button" class="btn btn-default btn-xs">
+        <span class="glyphicon glyphicon-arrow-up"></span>&nbsp;Up
+      </button>
     </h4>
   </div>
 
@@ -18,31 +20,73 @@
       <tr>
         <!--click header to change sort order?-->
         <th class="col-xs-2"><a href="#">Title</a></th>
-        <th class="col-xs-2"><a href="#">Action</a></th>
-        <th class="col-xs-2"><a href="#">Access</a></th>
+        <th class="col-xs-2"></th>
+        <th class="col-xs-2">Access</th>
         <th class="col-xs-2"><a href="#">Created By</a></th>
         <th class="col-xs-2"><a href="#">Modified</a></th> <!--not always displayed-->
         <th class="col-xs-2"><a href="#">Size</a></th>
       </tr>
       <tr>
-        <td class="col-xs-2"><a href="#">Syllabus</a></td>
-        <td class="col-xs-2"></td>
+        <td class="col-xs-2">
+          <span class="glyphicon glyphicon-file"></span>
+          <a href="#">Syllabus</a>
+        </td>
+        <td class="col-xs-2">
+          <!-- Single button -->
+          <div class="btn-group">
+            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+              Action <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Copy</a></li>
+              <li><a href="#">View Details</a></li>
+            </ul>
+          </div>
+        </td>
         <td class="col-xs-2">Entire Site</td>
         <td class="col-xs-2">Professor</td>
         <td class="col-xs-2">Aug 17, 2013</td>
         <td class="col-xs-2">1 item</td>
       </tr>
       <tr>
-        <td class="col-xs-2"><a href="#">Lectures</a></td>
-        <td class="col-xs-2"></td>
+        <td class="col-xs-2">
+          <span class="glyphicon glyphicon-folder-close"></span>
+          <a href="#">Lectures</a>
+        </td>
+        <td class="col-xs-2">
+        <!-- Single button -->
+          <div class="btn-group">
+            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+              Action <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Copy</a></li>
+              <li><a href="#">View Details</a></li>
+            </ul>
+          </div>
+        </td>
         <td class="col-xs-2">Entire Site</td>
         <td class="col-xs-2">Professor</td>
         <td class="col-xs-2">Aug 17, 2013</td>
         <td class="col-xs-2">1 item</td>
       </tr>
       <tr>
-        <td class="col-xs-2"><a href="#">Study Guides</a></td>
-        <td class="col-xs-2"></td>
+        <td class="col-xs-2">
+          <span class="glyphicon glyphicon-folder-close"></span>
+          <a href="#">Study Guides</a>
+        </td>
+        <td class="col-xs-2">
+        <!-- Single button -->
+          <div class="btn-group">
+            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+              Action <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Copy</a></li>
+              <li><a href="#">View Details</a></li>
+            </ul>
+          </div>
+        </td>
         <td class="col-xs-2">Entire Site</td>
         <td class="col-xs-2">Professor</td>
         <td class="col-xs-2">Aug 17, 2013</td>
