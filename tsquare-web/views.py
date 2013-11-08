@@ -15,7 +15,7 @@ dirname, filename = os.path.split(os.path.abspath(__file__))
 GITHUB_BASE_AUTH_URL = 'https://github.com/login/oauth/authorize'
 GITHUB_AUTH_EXCHANGE = 'https://github.com/login/oauth/access_token'
 GOOGLE_BASE_AUTH_URL = 'https://accounts.google.com/o/oauth2/auth'
-GOOGLE_EXCHANGE_REDIRECT_URI = 'http://localhost:8000/google_login_exchange'
+GOOGLE_EXCHANGE_REDIRECT_URI = 'http://tsquare-webapp-temp.herokuapp.com/google_login_exchange'
 GOOGLE_OAUTH_TOKEN_URL = "https://accounts.google.com/o/oauth2/token"
 
 def tlogin(request):
@@ -25,6 +25,8 @@ def tlogin(request):
             try:
                 tsapi = TSquareAPI(username, password)
                 request.session['tsapi'] = tsapi
+                request.session['courses'] = tsapi.get_sites()
+                print request.session['courses']
             except TSquareAuthException:
                 return render(request,'login.html',{'login_failed':'Invalid username or password.'})
             try:
@@ -168,8 +170,10 @@ def profile(request):
 def sites(request):
         tsapi = request.session['tsapi']
         sites = tsapi.get_sites()
-        return HttpResponse(tsapi)
-	#return render(request,'sites.html',{'sites':sites})
+        return render(request,'sites.html',{'sites':sites})
+
+def assignments(request, site_id):
+    pass
 
 @login_required
 def course_info(request):

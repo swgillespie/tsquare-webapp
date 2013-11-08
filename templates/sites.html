@@ -13,9 +13,9 @@
     <div class="panel-body">
       <div class="text1">
 
-          {% for site in sites %}
-            <div>{{ site.name }}</div>
-          {% endfor %}
+{% for site in sites %}
+                       <li><a href="{{ site.entityURL }}">{{ site.title }}</a></li>
+                  {% endfor %}
 
         </div>
         </div>
