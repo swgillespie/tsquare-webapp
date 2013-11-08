@@ -1,0 +1,35 @@
+
+{% extends "layout.html" %}
+
+{% block title %}Services{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="header">
+    <h4>Services</h4>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="text1">
+
+          {% if notice_already %}
+          <div class="alert alert-info">
+              {{ notice_already }}
+          </div>
+          {% elif notice_new %}
+          <div class="alert alert-success">
+              {{ notice_new }}
+          </div>
+          {% endif %}
+
+          <h4>Integrate Your T-Square account with following services</h4>
+  <a href="/github_login">GitHub</a><br/>
+  <a href="/google_login">Google Drive</a>
+      </div>
+    </div>
+  </div>
+</div> <!-- /container -->
+
+{% endblock %}

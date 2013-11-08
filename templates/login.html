@@ -7,9 +7,15 @@
 <div class="container">
 <div class="jumbotron">
 
+    {% if login_failed %}
+      <div class="alert alert-danger">
+          {{ login_failed }}
+      </div>
+      {% endif %}
   <form class="form-signin" action="" method="POST">
   	{% csrf_token %}
     <h3>TSquare2 - Login</h3>
+
     <input type="text" name="username" class="form-control" placeholder="Username" />
     <input type="password" name="password" class="form-control" placeholder="Password" />
     <!--TBA

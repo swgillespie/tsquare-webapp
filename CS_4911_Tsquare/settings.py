@@ -16,9 +16,22 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+
 import dj_database_url
 DATABASES = {}
 DATABASES['default'] =  dj_database_url.config()
+
+
+'''
+For local testing...
+DATABASES = {
+    'default': {
+        'ENGINE':'django.db.backends.sqlite3',
+        'NAME': ROOT_PATH+'/tsquaredb.sqlite3',
+    }
+}
+'''
+
 
 
 # Local time zone for this installation. Choices can be found here:
