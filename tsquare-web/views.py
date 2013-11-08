@@ -109,6 +109,7 @@ def select_github_repos(request):
 	return redirect('https://api.github.com/user/repos?'+profile.github_access_token)
 
 # https://developers.google.com/accounts/docs/OAuth2Login
+@login_required
 def google_login(request):
         profile = UserProfile.objects.get(user_id=request.user.id)
         if len(profile.gdrive_access_token) != 0:
@@ -124,6 +125,7 @@ def google_login(request):
         }
         return redirect(GOOGLE_BASE_AUTH_URL+"?"+urllib.urlencode(params))
 
+@login_required
 def google_login_exchange(request):
         code = request.GET['code']
         f = open(dirname+'/google_config.txt','r')
@@ -142,6 +144,7 @@ def google_login_exchange(request):
         profile.save()
         return redirect('/services?done=new&service=Google Drive')
 
+@login_required
 def gdrive_select(request):
     pass
 
@@ -160,13 +163,10 @@ def profile(request):
 	return render(request,'profile.html')
 
 @login_required
-def list_assignments(request):
+def sites(request):
 	tsapi = request.session['tsapi']
 	sites = tsapi.get_sites()
-	assignments = []
-	for s in sites:
-		assignments.append(tsapi.get_assignments(s))
-	return HttpResponse(s)
+	return render(request,'sites.html',{'sites':sites})
 
 @login_required
 def course_info(request):
