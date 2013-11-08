@@ -5,9 +5,42 @@
 {% block content %}
 
 <div class="container">
-      
-  <h1>Announcement List</h1>
-
+  <div class="header">
+    <h4>Announcement</h4>
+  </div>
+  
+  <div class="table-responsive">
+    <table class="table table-hover table-condensed">
+      <tr>
+        <!--click header to change sort order?-->
+        <th class="col-xs-2"><a href="#">Subject</a></th>
+        <th class="col-xs-2"><a href="#">Saved By</a></th>
+        <th class="col-xs-2"><a href="#">Modified Date</a></th>
+        <th class="col-xs-2"><a href="#">Beginning Date</a></th>
+        <th class="col-xs-2"><a href="#">Ending Date</a></th>
+      </tr>
+      <tr>
+        <td class="col-xs-2"><a href="#">No Office Hourse this Wednesday</a></td>
+        <td class="col-xs-2">Student TA</td>
+        <td class="col-xs-2">Sep 10, 2013 2:51 pm</td>
+        <td class="col-xs-2"></td>
+        <td class="col-xs-2"></td>
+      </tr>
+      <tr>
+        <td class="col-xs-2"><a href="#">Grades Released for test 2</a></td>
+        <td class="col-xs-2">Student TA</td>
+        <td class="col-xs-2">Sep 10, 2013 2:51 pm</td>
+        <td class="col-xs-2"></td>
+        <td class="col-xs-2"></td>
+      </tr><tr>
+        <td class="col-xs-2"><a href="#">No Office Hours this Wednesday Again</a></td>
+        <td class="col-xs-2">Student TA</td>
+        <td class="col-xs-2">Sep 10, 2013 2:51 pm</td>
+        <td class="col-xs-2"></td>
+        <td class="col-xs-2"></td>
+      </tr>
+    </table>
+  </div>
 </div> <!-- /container -->
 
 {% endblock %}

@@ -6,9 +6,54 @@
 
 <div class="container">
   <div class="header">
-    <h4>Assignment</h4>
-    <p> - status</p>
+    <h4>Assignment <span class="text-danger">- In progress</span></h4>
   </div>
+
+  <!--test h5 top and bottom margins-->
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-xs-6"><h5>Title</h5></div>
+        <div class="col-xs-6">Assignment 1</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6"><h5>Due</h5></div>
+        <div class="col-xs-6">Nov 1 2013 11:55pm</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6"><h5>Status</h5></div>
+        <div class="col-xs-6">Not Started</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6"><h5>Grade Scale</h5></div>
+        <div class="col-xs-6">Ungraded</div>
+      </div>
+    </div>
+  </div>
+  <hr></hr>
+
+  <div class="main">
+    <h5>Instructions</h5>
+    <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
+
+    <hr></hr>
+    <h5>Submission</h5>
+    <textarea class="form-control" rows="3"></textarea>
+    <p></p>
+    <div class="form-group">
+      <label for="attachment"><h5>Attachments</h5></label>
+      <input type="file" id="attachment">
+      <p class="help-block">No attachments yet</p>
+    </div>
+
+    <!--test button size on mobile-->
+    <button class="btn btn-warning btn-sm" type="submit" value="AssignmentSubmit">Submit</button>
+    <button class="btn btn-default btn-sm" type="button" value="Preview">Preview</button>
+    <button class="btn btn-default btn-sm" type="button" value="SaveDraft">Save Draft</button>
+    <button class="btn btn-default btn-sm" type="button" value="Cancel">Cancel</button>
+    <p></p>
+  </div>
+
 </div> <!-- /container -->
 
 {% endblock %}

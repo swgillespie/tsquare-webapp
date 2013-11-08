@@ -7,7 +7,7 @@ from django.conf.urls import patterns, include, url
 urlpatterns = patterns('',
    
     # Examples:
-    url(r'^$','tsquare-web.views.index'),
+    url(r'^$','tsquare-web.views.tlogin'),
     url(r'^tlogin/$', 'tsquare-web.views.tlogin'),
     url(r'^tlogout/$','tsquare-web.views.tlogout'),
     url(r'^home/$','tsquare-web.views.home'),
@@ -17,7 +17,14 @@ urlpatterns = patterns('',
     url(r'^github_login_exchange/$','tsquare-web.views.github_login_exchange'),
     url(r'^google_login/$','tsquare-web.views.google_login'),
     url(r'^list_assignments/$','tsquare-web.views.list_assignments'),
+    url(r'^assignment_detail','tsquare-web.views.assignment_detail'),
     url(r'^profile','tsquare-web.views.profile'),
+    url(r'^gradebook','tsquare-web.views.gradebook'),
+    url(r'^resources','tsquare-web.views.resources'),
+    url(r'^course_info','tsquare-web.views.course_info'),
+    url(r'^announcements','tsquare-web.views.announcements'),
+    url(r'^wiki','tsquare-web.views.wiki'),
+    url(r'^help','tsquare-web.views.help'),
     # url(r'^CS_4911_Tsquare/', include('CS_4911_Tsquare.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

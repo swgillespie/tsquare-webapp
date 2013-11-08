@@ -1,7 +1,7 @@
 # Create your views here.
 
 from django.shortcuts import render,render_to_response,redirect
-from tsquare.core import TSquareAPI, TSquareAuthException
+from tsquare_api import TSquareAPI, TSquareAuthException
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -61,10 +61,6 @@ def home(request):
 @login_required
 def profile(request):
 	return render_to_response('profile.html')
-
-@login_required
-def assignments(request):
-	return render_to_response('assignments.html')
 
 @login_required
 def resources(request):
@@ -141,3 +137,23 @@ def list_assignments(request):
 	for s in sites:
 		assignments.append(tsapi.get_assignments(s))
 	return HttpResponse(s)
+
+@login_required
+def course_info(request):
+	return render_to_response('course_info.html')
+
+@login_required
+def announcements(request):
+	return render_to_response('announcements.html')
+
+@login_required
+def wiki(request):
+	return render_to_response('wiki.html')
+
+@login_required
+def help(request):
+	return render_to_response('help.html')
+
+@login_required
+def assignment_detail(request):
+	return render_to_response('assignment_detail.html')
