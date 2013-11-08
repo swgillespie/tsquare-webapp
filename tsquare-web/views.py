@@ -58,7 +58,9 @@ def index(request):
 
 @login_required
 def home(request):
-	return render_to_response('home.html')
+        tsapi = request.session['tsapi']
+        user = tsapi.get_user_info()
+        return render_to_response('home.html',{'userinfo':user})
 
 @login_required
 def profile(request):
@@ -164,9 +166,10 @@ def profile(request):
 
 @login_required
 def sites(request):
-	tsapi = request.session['tsapi']
-	sites = tsapi.get_sites()
-	return render(request,'sites.html',{'sites':sites})
+        tsapi = request.session['tsapi']
+        sites = tsapi.get_sites()
+        return HttpResponse(tsapi)
+	#return render(request,'sites.html',{'sites':sites})
 
 @login_required
 def course_info(request):

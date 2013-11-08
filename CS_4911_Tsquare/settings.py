@@ -21,6 +21,7 @@ import dj_database_url
 DATABASES = {}
 DATABASES['default'] =  dj_database_url.config()
 
+
 '''
 For local testing...
 DATABASES = {
@@ -30,6 +31,7 @@ DATABASES = {
     }
 }
 '''
+
 
 
 # Local time zone for this installation. Choices can be found here:
