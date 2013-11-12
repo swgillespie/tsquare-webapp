@@ -344,7 +344,7 @@ p {
   font-weight: 200;
   line-height: 1.4;
 }
-@media (min-width: 320px) {
+@media (min-width: 550px) {
   .lead {
     font-size: 21px;
   }
@@ -506,7 +506,7 @@ dt {
 dd {
   margin-left: 0;
 }
-@media (min-width: 320px) {
+@media (min-width: 550px) {
   .dl-horizontal dt {
     float: left;
     width: 160px;
@@ -807,7 +807,7 @@ pre code {
 .col-xs-12 {
   width: 100%;
 }
-@media (min-width: 320px) {
+@media (min-width: 550px) {
   .container {
     max-width: 750px;
   }
@@ -960,7 +960,7 @@ pre code {
     margin-left: 91.66666666666666%;
   }
 }
-@media (min-width: 320px) {
+@media (min-width: 550px) {
   .container {
     max-width: 970px;
   }
@@ -1122,7 +1122,7 @@ pre code {
     margin-left: 91.66666666666666%;
   }
 }
-@media (min-width: 3200px) {
+@media (min-width: 5500px) {
   .container {
     max-width: 1170px;
   }
@@ -1446,7 +1446,7 @@ table th[class*="col-"] {
 @media (max-width: 768px) {
   .table-responsive {
     width: 100%;
-    margin-bottom: 15px;
+    margin-bottom: 0;
     overflow-y: hidden;
     overflow-x: scroll;
     border: 1px solid #dddddd;
@@ -1745,7 +1745,7 @@ textarea.input-lg {
   margin-bottom: 10px;
   color: #737373;
 }
-@media (min-width: 320px) {
+@media (min-width: 550px) {
   .form-inline .form-group {
     display: inline-block;
     margin-bottom: 0;
@@ -1804,7 +1804,7 @@ textarea.input-lg {
 .form-horizontal .form-group:after {
   clear: both;
 }
-@media (min-width: 320px) {
+@media (min-width: 550px) {
   .form-horizontal .control-label {
     text-align: right;
   }
@@ -3228,7 +3228,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .nav-tabs.nav-justified > li > a {
   text-align: center;
 }
-@media (min-width: 320px) {
+@media (min-width: 550px) {
   .nav-tabs.nav-justified > li {
     display: table-cell;
     width: 1%;
@@ -3272,7 +3272,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .nav-justified > li > a {
   text-align: center;
 }
-@media (min-width: 320px) {
+@media (min-width: 550px) {
   .nav-justified > li {
     display: table-cell;
     width: 1%;
@@ -3364,7 +3364,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar:after {
   clear: both;
 }
-@media (min-width: 320px) {
+@media (min-width: 550px) {
   .navbar {
     border-radius: 4px;
   }
@@ -3393,7 +3393,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-header:after {
   clear: both;
 }
-@media (min-width: 320px) {
+@media (min-width: 550px) {
   .navbar-header {
     float: left;
   }
@@ -3434,7 +3434,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-collapse.in {
   overflow-y: auto;
 }
-@media (min-width: 320px) {
+@media (min-width: 550px) {
   .navbar-collapse {
     width: auto;
     border-top: 0;
@@ -3464,7 +3464,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   margin-right: -15px;
   margin-left: -15px;
 }
-@media (min-width: 320px) {
+@media (min-width: 550px) {
   .container > .navbar-header,
   .container > .navbar-collapse {
     margin-right: 0;
@@ -3474,7 +3474,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-static-top {
   border-width: 0 0 1px;
 }
-@media (min-width: 320px) {
+@media (min-width: 550px) {
   .navbar-static-top {
     border-radius: 0;
   }
@@ -3486,7 +3486,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   left: 0;
   border-width: 0 0 1px;
 }
-@media (min-width: 320px) {
+@media (min-width: 550px) {
   .navbar-fixed-top,
   .navbar-fixed-bottom {
     border-radius: 0;
@@ -3510,7 +3510,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-brand:focus {
   text-decoration: none;
 }
-@media (min-width: 320px) {
+@media (min-width: 550px) {
   .navbar > .container .navbar-brand {
     margin-left: -15px;
   }
@@ -3535,7 +3535,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-toggle .icon-bar + .icon-bar {
   margin-top: 4px;
 }
-@media (min-width: 320px) {
+@media (min-width: 550px) {
   .navbar-toggle {
     display: none;
   }
@@ -3548,7 +3548,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   padding-bottom: 10px;
   line-height: 20px;
 }
-@media (max-width: 319px) {
+@media (max-width: 550px) {
   .navbar-nav .open .dropdown-menu {
     position: static;
     float: none;
@@ -3570,7 +3570,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
     background-image: none;
   }
 }
-@media (min-width: 320px) {
+@media (min-width: 550px) {
   .navbar-nav {
     float: left;
     margin: 0;
@@ -3583,7 +3583,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
     padding-bottom: 15px;
   }
 }
-@media (min-width: 320px) {
+@media (min-width: 550px) {
   .navbar-left {
     float: left !important;
   }
@@ -3602,7 +3602,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   margin-top: 8px;
   margin-bottom: 8px;
 }
-@media (min-width: 320px) {
+@media (min-width: 550px) {
   .navbar-form .form-group {
     display: inline-block;
     margin-bottom: 0;
@@ -3624,12 +3624,12 @@ textarea.input-group-sm > .input-group-btn > .btn {
     margin-left: 0;
   }
 }
-@media (max-width: 319px) {
+@media (max-width: 550px) {
   .navbar-form .form-group {
     margin-bottom: 5px;
   }
 }
-@media (min-width: 320px) {
+@media (min-width: 550px) {
   .navbar-form {
     width: auto;
     border: 0;
@@ -3664,7 +3664,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   margin-top: 15px;
   margin-bottom: 15px;
 }
-@media (min-width: 320px) {
+@media (min-width: 550px) {
   .navbar-text {
     margin-left: 15px;
     margin-right: 15px;
@@ -3740,7 +3740,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   border-top-color: #777777;
   border-bottom-color: #777777;
 }
-@media (max-width: 319px) {
+@media (max-width: 550px) {
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
     color: #777777;
   }
@@ -3837,7 +3837,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   border-top-color: #ffffff;
   border-bottom-color: #ffffff;
 }
-@media (max-width: 319px) {
+@media (max-width: 550px) {
   .navbar-inverse .navbar-nav .open .dropdown-menu > .dropdown-header {
     border-color: #080808;
   }
@@ -4101,7 +4101,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 .badge {
   display: inline-block;
-  min-width: 320x;
+  min-width: 550x;
   padding: 3px 7px;
   font-size: 12px;
   font-weight: bold;
@@ -4153,7 +4153,7 @@ a.list-group-item.active > .badge,
 .container .jumbotron {
   border-radius: 6px;
 }
-@media screen and (min-width: 320px) {
+@media screen and (min-width: 550px) {
   .jumbotron {
     padding-top: 48px;
     padding-bottom: 48px;
@@ -4815,7 +4815,7 @@ button.close {
   bottom: 100%;
   margin-bottom: 1px;
 }
-@media (min-width: 320px) {
+@media (min-width: 550px) {
   .navbar-right .dropdown-menu {
     right: 0;
     left: auto;
@@ -5162,7 +5162,7 @@ body.modal-open,
 .modal-footer .btn-block + .btn-block {
   margin-left: 0;
 }
-@media screen and (min-width: 320px) {
+@media screen and (min-width: 550px) {
   .modal-dialog {
     left: 50%;
     right: auto;
@@ -5330,7 +5330,7 @@ body.modal-open,
 .carousel-caption .btn {
   text-shadow: none;
 }
-@media screen and (min-width: 320px) {
+@media screen and (min-width: 550px) {
   .carousel-control .icon-prev,
   .carousel-control .icon-next {
     width: 30px;
@@ -5390,7 +5390,7 @@ body.modal-open,
 }
 @media screen and (max-width: 400px) {
   @-ms-viewport {
-    width: 320px;
+    width: 550px;
   }
 }
 .hidden {
@@ -5407,7 +5407,7 @@ th.visible-xs,
 td.visible-xs {
   display: none !important;
 }
-@media (max-width: 319px) {
+@media (max-width: 550px) {
   .visible-xs {
     display: block !important;
   }
@@ -5419,7 +5419,7 @@ td.visible-xs {
     display: table-cell !important;
   }
 }
-@media (min-width: 320px) and (max-width: 991px) {
+@media (min-width: 550px) and (max-width: 991px) {
   .visible-xs.visible-sm {
     display: block !important;
   }
@@ -5431,7 +5431,7 @@ td.visible-xs {
     display: table-cell !important;
   }
 }
-@media (min-width: 320px) and (max-width: 1199px) {
+@media (min-width: 550px) and (max-width: 1199px) {
   .visible-xs.visible-md {
     display: block !important;
   }
@@ -5443,7 +5443,7 @@ td.visible-xs {
     display: table-cell !important;
   }
 }
-@media (min-width: 3200px) {
+@media (min-width: 5500px) {
   .visible-xs.visible-lg {
     display: block !important;
   }
@@ -5465,7 +5465,7 @@ th.visible-sm,
 td.visible-sm {
   display: none !important;
 }
-@media (max-width: 319px) {
+@media (max-width: 550px) {
   .visible-sm.visible-xs {
     display: block !important;
   }
@@ -5477,7 +5477,7 @@ td.visible-sm {
     display: table-cell !important;
   }
 }
-@media (min-width: 320px) and (max-width: 991px) {
+@media (min-width: 550px) and (max-width: 991px) {
   .visible-sm {
     display: block !important;
   }
@@ -5489,7 +5489,7 @@ td.visible-sm {
     display: table-cell !important;
   }
 }
-@media (min-width: 320px) and (max-width: 1199px) {
+@media (min-width: 550px) and (max-width: 1199px) {
   .visible-sm.visible-md {
     display: block !important;
   }
@@ -5501,7 +5501,7 @@ td.visible-sm {
     display: table-cell !important;
   }
 }
-@media (min-width: 3200px) {
+@media (min-width: 5500px) {
   .visible-sm.visible-lg {
     display: block !important;
   }
@@ -5523,7 +5523,7 @@ th.visible-md,
 td.visible-md {
   display: none !important;
 }
-@media (max-width: 319px) {
+@media (max-width: 550px) {
   .visible-md.visible-xs {
     display: block !important;
   }
@@ -5535,7 +5535,7 @@ td.visible-md {
     display: table-cell !important;
   }
 }
-@media (min-width: 320px) and (max-width: 991px) {
+@media (min-width: 550px) and (max-width: 991px) {
   .visible-md.visible-sm {
     display: block !important;
   }
@@ -5547,7 +5547,7 @@ td.visible-md {
     display: table-cell !important;
   }
 }
-@media (min-width: 320px) and (max-width: 1199px) {
+@media (min-width: 550px) and (max-width: 1199px) {
   .visible-md {
     display: block !important;
   }
@@ -5559,7 +5559,7 @@ td.visible-md {
     display: table-cell !important;
   }
 }
-@media (min-width: 3200px) {
+@media (min-width: 5500px) {
   .visible-md.visible-lg {
     display: block !important;
   }
@@ -5581,7 +5581,7 @@ th.visible-lg,
 td.visible-lg {
   display: none !important;
 }
-@media (max-width: 319px) {
+@media (max-width: 550px) {
   .visible-lg.visible-xs {
     display: block !important;
   }
@@ -5593,7 +5593,7 @@ td.visible-lg {
     display: table-cell !important;
   }
 }
-@media (min-width: 320px) and (max-width: 991px) {
+@media (min-width: 550px) and (max-width: 991px) {
   .visible-lg.visible-sm {
     display: block !important;
   }
@@ -5605,7 +5605,7 @@ td.visible-lg {
     display: table-cell !important;
   }
 }
-@media (min-width: 320px) and (max-width: 1199px) {
+@media (min-width: 550px) and (max-width: 1199px) {
   .visible-lg.visible-md {
     display: block !important;
   }
@@ -5617,7 +5617,7 @@ td.visible-lg {
     display: table-cell !important;
   }
 }
-@media (min-width: 3200px) {
+@media (min-width: 5500px) {
   .visible-lg {
     display: block !important;
   }
@@ -5639,7 +5639,7 @@ th.hidden-xs,
 td.hidden-xs {
   display: table-cell !important;
 }
-@media (max-width: 319px) {
+@media (max-width: 550px) {
   .hidden-xs {
     display: none !important;
   }
@@ -5651,7 +5651,7 @@ td.hidden-xs {
     display: none !important;
   }
 }
-@media (min-width: 320px) and (max-width: 991px) {
+@media (min-width: 550px) and (max-width: 991px) {
   .hidden-xs.hidden-sm {
     display: none !important;
   }
@@ -5663,7 +5663,7 @@ td.hidden-xs {
     display: none !important;
   }
 }
-@media (min-width: 320px) and (max-width: 1199px) {
+@media (min-width: 550px) and (max-width: 1199px) {
   .hidden-xs.hidden-md {
     display: none !important;
   }
@@ -5675,7 +5675,7 @@ td.hidden-xs {
     display: none !important;
   }
 }
-@media (min-width: 3200px) {
+@media (min-width: 5500px) {
   .hidden-xs.hidden-lg {
     display: none !important;
   }
@@ -5697,7 +5697,7 @@ th.hidden-sm,
 td.hidden-sm {
   display: table-cell !important;
 }
-@media (max-width: 319px) {
+@media (max-width: 550px) {
   .hidden-sm.hidden-xs {
     display: none !important;
   }
@@ -5709,7 +5709,7 @@ td.hidden-sm {
     display: none !important;
   }
 }
-@media (min-width: 320px) and (max-width: 991px) {
+@media (min-width: 550px) and (max-width: 991px) {
   .hidden-sm {
     display: none !important;
   }
@@ -5721,7 +5721,7 @@ td.hidden-sm {
     display: none !important;
   }
 }
-@media (min-width: 320px) and (max-width: 1199px) {
+@media (min-width: 550px) and (max-width: 1199px) {
   .hidden-sm.hidden-md {
     display: none !important;
   }
@@ -5733,7 +5733,7 @@ td.hidden-sm {
     display: none !important;
   }
 }
-@media (min-width: 3200px) {
+@media (min-width: 5500px) {
   .hidden-sm.hidden-lg {
     display: none !important;
   }
@@ -5755,7 +5755,7 @@ th.hidden-md,
 td.hidden-md {
   display: table-cell !important;
 }
-@media (max-width: 319px) {
+@media (max-width: 550px) {
   .hidden-md.hidden-xs {
     display: none !important;
   }
@@ -5767,7 +5767,7 @@ td.hidden-md {
     display: none !important;
   }
 }
-@media (min-width: 320px) and (max-width: 991px) {
+@media (min-width: 550px) and (max-width: 991px) {
   .hidden-md.hidden-sm {
     display: none !important;
   }
@@ -5779,7 +5779,7 @@ td.hidden-md {
     display: none !important;
   }
 }
-@media (min-width: 320px) and (max-width: 1199px) {
+@media (min-width: 550px) and (max-width: 1199px) {
   .hidden-md {
     display: none !important;
   }
@@ -5791,7 +5791,7 @@ td.hidden-md {
     display: none !important;
   }
 }
-@media (min-width: 3200px) {
+@media (min-width: 5500px) {
   .hidden-md.hidden-lg {
     display: none !important;
   }
@@ -5813,7 +5813,7 @@ th.hidden-lg,
 td.hidden-lg {
   display: table-cell !important;
 }
-@media (max-width: 319px) {
+@media (max-width: 550px) {
   .hidden-lg.hidden-xs {
     display: none !important;
   }
@@ -5825,7 +5825,7 @@ td.hidden-lg {
     display: none !important;
   }
 }
-@media (min-width: 320px) and (max-width: 991px) {
+@media (min-width: 550px) and (max-width: 991px) {
   .hidden-lg.hidden-sm {
     display: none !important;
   }
@@ -5837,7 +5837,7 @@ td.hidden-lg {
     display: none !important;
   }
 }
-@media (min-width: 320px) and (max-width: 1199px) {
+@media (min-width: 550px) and (max-width: 1199px) {
   .hidden-lg.hidden-md {
     display: none !important;
   }
@@ -5849,7 +5849,7 @@ td.hidden-lg {
     display: none !important;
   }
 }
-@media (min-width: 3200px) {
+@media (min-width: 5500px) {
   .hidden-lg {
     display: none !important;
   }
