@@ -10,6 +10,7 @@ from models import *
 import urllib
 import requests
 import os
+import pdb
 
 dirname, filename = os.path.split(os.path.abspath(__file__))
 GITHUB_BASE_AUTH_URL = 'https://github.com/login/oauth/authorize'
@@ -172,8 +173,15 @@ def sites(request):
         sites = tsapi.get_sites()
         return render(request,'sites.html',{'sites':sites})
 
-def assignments(request, site_id):
-    pass
+# example view that gets first site instead of using site_id param
+@login_required
+def assignments(request):
+    tsapi = request.session['tsapi']
+    sites = tsapi.get_sites() # get sites from user class?
+    #pdb.set_trace()
+    site = sites[17]
+    assignments = tsapi.get_assignments(site)
+    return render(request,'assignments.html',{'assignments':assignments})
 
 @login_required
 def course_info(request):
