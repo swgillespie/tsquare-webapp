@@ -14,28 +14,28 @@
     <div class="panel-body">
       <div class="row-header">
         <!--click header to change sort order?-->
-        <div class="col-xs-4"><a href="#">Assignments</a></div>
-        <div class="col-xs-4"><a href="#">Status</a></div>
-        <!--<div class="col-xs-4"><strong>Open</strong></div>-->
-        <div class="col-xs-4"><a href="#">Due</a></div>
+        <div class="col-xs-3"><a href="#">Assignments</a></div>
+        <div class="col-xs-3"><a href="#">Status</a></div>
+        <div class="col-xs-3"><a href="#">Open</a></div>
+        <div class="col-xs-3"><a href="#">Due</a></div>
       </div>
-      <hr></hr>
-      
+      <hr width="100%">
+
+  {% if assignments %}
+    {% for assignment in assignments %}
       <div class="row">
-        <div class="col-xs-4"><a href="/assignment_detail/">Homework 1</a></div>
-        <div class="col-xs-4">Submitted Sep 10, 2013 3:00 pm</div>
-        <div class="col-xs-4">Sep 13, 2013 5:00 pm</div>
+        <!--avoiding linking to the official tsquare assignment page?-->
+        <div class="col-xs-3"><a href="/assignments/{{ assignment.href }}">{{ assignment.title }}</a></div>
+        <div class="col-xs-3">{{ assignment.status }}</div>
+        <div class="col-xs-3">{{ assignment.openDate }}</div>
+        <div class="col-xs-3">{{ assignment.dueDate }}</div>
+        <!--something to denote that an attachment exists?-->
       </div>
-      <div class="row">
-        <div class="col-xs-4"><a href="/assignment_detail/">Homework 1</a></div>
-        <div class="col-xs-4">Submitted Sep 10, 2013 3:00 pm</div>
-        <div class="col-xs-4">Sep 13, 2013 5:00 pm</div>
-      </div>
-      <div class="row">
-        <div class="col-xs-4"><a href="/assignment_detail/">Homework 1</a></div>
-        <div class="col-xs-4">Submitted Sep 10, 2013 3:00 pm</div>
-        <div class="col-xs-4">Sep 13, 2013 5:00 pm</div>
-      </div>
+      <hr class="tablerow">
+    {% endfor %}
+  {% else %}
+      <p> No Assignments</p>
+  {% endif %}
     </div>
   </div>
 
