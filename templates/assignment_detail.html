@@ -2,6 +2,16 @@
 
 {% block title %}Assignment{% endblock %}
 
+{% block courses %}
+
+  {% if curr_sites %}
+    {% for site in curr_sites %}
+      <li><a href="#" id="">{{ site.title }}</a></li>
+    {% endfor %}
+  {% endif %}
+
+{% endblock %}
+
 {% block content %}
 
 <div class="container">

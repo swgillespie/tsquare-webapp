@@ -6,11 +6,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.utils import timezone
 from models import *
 import urllib
 import requests
 import os
-import pdb
 
 dirname, filename = os.path.split(os.path.abspath(__file__))
 GITHUB_BASE_AUTH_URL = 'https://github.com/login/oauth/authorize'
@@ -56,26 +56,30 @@ def tlogout(request):
 	logout(request)
 	return redirect('/')
 
-def index(request):
-	return render_to_response('index.html')
-
 @login_required
 def home(request):
         tsapi = request.session['tsapi']
         user = tsapi.get_user_info()
-        return render_to_response('home.html',{'userinfo':user})
+        return render_to_response('home.html',{'userinfo':user,
+                                               'sites'   :sites})
 
 @login_required
 def profile(request):
-	return render_to_response('profile.html')
+        tsapi = request.session['tsapi']
+        curr_sites = tsapi.get_sites(filter_func=get_curr_sites)
+    	return render(request,'profile.html',{'curr_sites':curr_sites})
 
 @login_required
 def resources(request):
-	return render_to_response('resources.html')
+        tsapi = request.session['tsapi']
+        curr_sites = tsapi.get_sites(filter_func=get_curr_sites)
+    	return render(request,'resources.html',{'curr_sites':curr_sites})
 
 @login_required
 def gradebook(request):
-	return render_to_response('gradebook.html')
+        tsapi = request.session['tsapi']
+        curr_sites = tsapi.get_sites(filter_func=get_curr_sites)
+    	return render(request,'gradebook.html',{'curr_sites':curr_sites})
 
 @login_required
 def github_login(request):
@@ -161,44 +165,64 @@ def external_services(request):
             params['notice_already'] = 'You have already integrated your account with '+request.GET['service']
         else:
             params['notice_new'] = 'You have successfully integrated your account with '+request.GET['service']+'!'
-    return render(request,'external_services.html',params)
-
-@login_required
-def profile(request):
-	return render(request,'profile.html')
+    return render(request,'external_services.html',params) # how to pass in site list here?
 
 @login_required
 def sites(request):
         tsapi = request.session['tsapi']
         sites = tsapi.get_sites()
-        return render(request,'sites.html',{'sites':sites})
+        curr_sites = tsapi.get_sites(filter_func=get_curr_sites)
+        return render(request,'sites.html',{'curr_sites':curr_sites,
+                                            'sites'     :sites})
 
 # example view that gets first site instead of using site_id param
 @login_required
 def assignments(request):
-    tsapi = request.session['tsapi']
-    sites = tsapi.get_sites() # get sites from user class?
-    #pdb.set_trace()
-    site = sites[17]
-    assignments = tsapi.get_assignments(site)
-    return render(request,'assignments.html',{'assignments':assignments})
+        tsapi = request.session['tsapi']
+        sites = tsapi.get_sites() # get sites from user class?
+        site = sites[17]
+        assignments = tsapi.get_assignments(site)
+        return render(request,'assignments.html',{'assignments':assignments,
+                                                  'sites'      :sites})
 
 @login_required
 def course_info(request):
-	return render_to_response('course_info.html')
+        tsapi = request.session['tsapi']
+        curr_sites = tsapi.get_sites(filter_func=get_curr_sites)
+    	return render(request,'course_info.html',{'curr_sites':curr_sites})
 
 @login_required
 def announcements(request):
-	return render_to_response('announcements.html')
+        tsapi = request.session['tsapi']
+        curr_sites = tsapi.get_sites(filter_func=get_curr_sites)
+        return render(request,'announcements.html',{'curr_sites':curr_sites})
 
 @login_required
 def wiki(request):
-	return render_to_response('wiki.html')
+        tsapi = request.session['tsapi']
+        curr_sites = tsapi.get_sites(filter_func=get_curr_sites)
+        return render(request,'wiki.html',{'curr_sites':curr_sites})
 
 @login_required
 def help(request):
-	return render_to_response('help.html')
+        tsapi = request.session['tsapi']
+        curr_sites = tsapi.get_sites(filter_func=get_curr_sites)
+        return render(request,'help.html',{'curr_sites':curr_sites})
 
 @login_required
 def assignment_detail(request):
-	return render_to_response('assignment_detail.html')
+        tsapi = request.session['tsapi']
+        curr_sites = tsapi.get_sites(filter_func=get_curr_sites)
+        return render(request,'assignment_detail.html',{'curr_sites':curr_sites})
+
+# filter_func that gets only the sites of the current term
+def get_curr_sites(site):
+        time = timezone.now()
+        if time.month < 6:
+            curr_term = 'SPRING ' + str(time.year)
+        else:
+            curr_term = 'FALL ' + str(time.year)
+        if site.props['term'] == curr_term:
+            return True
+        else:
+            return False

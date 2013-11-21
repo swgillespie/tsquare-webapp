@@ -174,6 +174,7 @@ textarea {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+  width: 100%;
 }
 *,
 *:before,
@@ -1125,7 +1126,7 @@ pre code {
     margin-left: 91.66666666666666%;
   }
 }
-@media (min-width: 5500px) {
+@media (min-width: 550px) {
   .container {
     max-width: 1170px;
   }
@@ -5446,7 +5447,7 @@ td.visible-xs {
     display: table-cell !important;
   }
 }
-@media (min-width: 5500px) {
+@media (min-width: 550) {
   .visible-xs.visible-lg {
     display: block !important;
   }
@@ -5504,7 +5505,7 @@ td.visible-sm {
     display: table-cell !important;
   }
 }
-@media (min-width: 5500px) {
+@media (min-width: 550) {
   .visible-sm.visible-lg {
     display: block !important;
   }
@@ -5562,7 +5563,7 @@ td.visible-md {
     display: table-cell !important;
   }
 }
-@media (min-width: 5500px) {
+@media (min-width: 550) {
   .visible-md.visible-lg {
     display: block !important;
   }
@@ -5620,7 +5621,7 @@ td.visible-lg {
     display: table-cell !important;
   }
 }
-@media (min-width: 5500px) {
+@media (min-width: 550px) {
   .visible-lg {
     display: block !important;
   }
@@ -5678,7 +5679,7 @@ td.hidden-xs {
     display: none !important;
   }
 }
-@media (min-width: 5500px) {
+@media (min-width: 550px) {
   .hidden-xs.hidden-lg {
     display: none !important;
   }
@@ -5736,7 +5737,7 @@ td.hidden-sm {
     display: none !important;
   }
 }
-@media (min-width: 5500px) {
+@media (min-width: 550px) {
   .hidden-sm.hidden-lg {
     display: none !important;
   }
@@ -5794,7 +5795,7 @@ td.hidden-md {
     display: none !important;
   }
 }
-@media (min-width: 5500px) {
+@media (min-width: 550px) {
   .hidden-md.hidden-lg {
     display: none !important;
   }
@@ -5852,7 +5853,7 @@ td.hidden-lg {
     display: none !important;
   }
 }
-@media (min-width: 5500px) {
+@media (min-width: 550px) {
   .hidden-lg {
     display: none !important;
   }
@@ -5920,3 +5921,40 @@ td.visible-print {
 .navbar-static-top {
   margin-bottom: 0px;
 }
+@media only screen and (max-width: 550px) {
+  /* Force table to not be like tables anymore */
+  table, thead, tbody, th, td, tr {
+    display: block !important;
+  }
+  /* Hide table headers (but not display: none;, for accessibility) */
+  thead tr {
+    position: absolute;
+    top: -9999px !important;
+    left: -9999px !important !important;
+  }
+  tr { border: 1px solid #ccc !important; }
+  td {
+    /* Behave  like a "row" */
+    border: none !important;
+    border-bottom: 1px solid #eee !important;
+    position: relative !important;
+    padding-left: 50% !important;
+    white-space: normal !important;
+    text-align:left !important;
+  }
+  td:before {
+    /* Now like a table header */
+    position: absolute !important;
+    /* Top/left values mimic padding */
+    top: 6px !important;
+    left: 6px !important;
+    width: 45% !important;
+    padding-right: 10px !important;
+    white-space: nowrap !important;
+    text-align:left !important;
+    font-weight: bold !important;
+  }
+  /* Label the data */
+  td:before { content: attr(data-title) !important; }
+}
+

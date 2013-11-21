@@ -2,42 +2,47 @@
 
 {% block title %}Assignments{% endblock %}
 
+{% block courses %}
+
+  {% if curr_sites %}
+    {% for site in curr_sites %}
+      <li><a href="#" id="">{{ site.title }}</a></li>
+    {% endfor %}
+  {% endif %}
+
+{% endblock%}
+
 {% block content %}
 
 <div class="container">
   <div class="header">
     <h4>Assignment List</h4>
-    <!--list the number of assignments being viewed here?-->
   </div>
 
-  <div class="panel panel-default">
-    <div class="panel-body">
-      <div class="row-header">
-        <!--click header to change sort order?-->
-        <div class="col-xs-3"><a href="#">Assignments</a></div>
-        <div class="col-xs-3"><a href="#">Status</a></div>
-        <div class="col-xs-3"><a href="#">Open</a></div>
-        <div class="col-xs-3"><a href="#">Due</a></div>
-      </div>
-      <hr width="100%">
-
-  {% if assignments %}
-    {% for assignment in assignments %}
-      <div class="row">
-        <!--avoiding linking to the official tsquare assignment page?-->
-        <div class="col-xs-3"><a href="/assignments/{{ assignment.href }}">{{ assignment.title }}</a></div>
-        <div class="col-xs-3">{{ assignment.status }}</div>
-        <div class="col-xs-3">{{ assignment.openDate }}</div>
-        <div class="col-xs-3">{{ assignment.dueDate }}</div>
-        <!--something to denote that an attachment exists?-->
-      </div>
-      <hr class="tablerow">
-    {% endfor %}
-  {% else %}
-      <p> No Assignments</p>
-  {% endif %}
-    </div>
-  </div>
+    <table >
+      <thead>
+        <tr>
+          <!--click header to change sort order?-->
+          <th><a href="#">Assignments</a></th>
+          <th><a href="#">Status</a></th>
+          <th><a href="#">Open</a></th>
+          <th><a href="#">Due</a></th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for assignment in assignments %}
+        <tr>
+          <!--avoiding linking to the official tsquare assignment page?-->
+          <td data-title="Assignments"><a href="{{ assignment.href }}">{{ assignment.title }}</a></td>
+          <td data-title="Status">{{ assignment.status }}</td>
+          <td data-title="Open">{{ assignment.openDate }}</td>
+          <td data-title="Due">{{ assignment.dueDate }}</td>
+          <!--something to denote that an attachment exists?-->
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  
 
 </div> <!-- /container -->
 
