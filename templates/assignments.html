@@ -2,41 +2,47 @@
 
 {% block title %}Assignments{% endblock %}
 
+{% block courses %}
+
+  {% if curr_sites %}
+    {% for site in curr_sites %}
+      <li><a href="#" id="">{{ site.title }}</a></li>
+    {% endfor %}
+  {% endif %}
+
+{% endblock%}
+
 {% block content %}
 
 <div class="container">
   <div class="header">
     <h4>Assignment List</h4>
-    <!--list the number of assignments being viewed here?-->
   </div>
 
-  <div class="panel panel-default">
-    <div class="panel-body">
-      <div class="row-header">
-        <!--click header to change sort order?-->
-        <div class="col-xs-3"><a href="#">Assignments</a></div>
-        <div class="col-xs-3"><a href="#">Status</a></div>
-        <div class="col-xs-3"><a href="#">Open</a></div>
-        <div class="col-xs-3"><a href="#">Due</a></div>
-      </div>
-      <hr width="100%">
-
-  {% if assignments %}
+  <div class="table-responsive">
     {% for assignment in assignments %}
-      <div class="row">
-        <!--avoiding linking to the official tsquare assignment page?-->
-        <div class="col-xs-3"><a href="/assignments/{{ assignment.href }}">{{ assignment.title }}</a></div>
-        <div class="col-xs-3">{{ assignment.status }}</div>
-        <div class="col-xs-3">{{ assignment.openDate }}</div>
-        <div class="col-xs-3">{{ assignment.dueDate }}</div>
+      <table class="table table-bordered table-condensed">
+        <tr>
+          <!--avoid linking to the official tsquare assignment page?-->
+          <th class="col-xs-2">Assignments</th>
+          <td class="col-xs-2"><a href="{{ assignment.href }}">{{ assignment.title }}</a></td>
+        </tr>
+        <tr>
+          <th class="col-xs-2">Status</th>
+          <td class="col-xs-2">{{ assignment.status }}</td>
+        </tr>
+        <tr>
+          <th class="col-xs-2">Open</th>
+          <td class="col-xs-2">{{ assignment.openDate }}</td>
+        </tr>
+        <tr>
+          <th class="col-xs-2">Due</th>
+          <td class="col-xs-2">{{ assignment.dueDate }}</td>
+        </tr>
         <!--something to denote that an attachment exists?-->
-      </div>
-      <hr class="tablerow">
+      </table>
+      <hr>
     {% endfor %}
-  {% else %}
-      <p> No Assignments</p>
-  {% endif %}
-    </div>
   </div>
 
 </div> <!-- /container -->

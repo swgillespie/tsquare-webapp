@@ -2,24 +2,48 @@
 
 {% block title %}Home{% endblock %}
 
+{% block courses %}
+
+  {% if curr_sites %}
+    {% for site in curr_sites %}
+      <li><a href="#">{{ site.title }}</a></li>
+    {% endfor %}
+  {% endif %}
+
+{% endblock %}
+
 {% block content %}
 
 <div class="container">
   <div class="header">
-    <h4>Home</h4>
+    <h4>Courses</h4>
   </div>
 
   <div class="panel panel-default">
     <div class="panel-body">
       <div class="text1">
 
-{% for site in sites %}
-                       <li><a href="{{ site.entityURL }}">{{ site.title }}</a></li>
-                  {% endfor %}
+      {% if curr_sites %}
+        <h5>Current Semester:</h5>
+        {% for site in curr_sites %}
+          <li><a href="{{ site.entityURL }}">{{ site.title }}</a></li>
+        {% endfor %}
+      {% else %}
+        <p>No Courses Available</p>
+      {% endif %}
+      <br>
+      {% if sites %}
+        <h5>All Semesters:</h5>
+        {% for site in sites %}
+          <li><a href="{{ site.entityURL }}">{{ site.title }}</a></li>
+        {% endfor %}
+      {% else %}
+        <p>No Courses Available</p>
+      {% endif %}
 
-        </div>
-        </div>
       </div>
     </div>
+  </div>
+</div>
 
 {% endblock %}

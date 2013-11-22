@@ -2,6 +2,16 @@
 
 {% block title %}Resources{% endblock %}
 
+{% block courses %}
+
+  {% if curr_sites %}
+    {% for site in curr_sites %}
+      <li><a href="#" id="">{{ site.title }}</a></li>
+    {% endfor %}
+  {% endif %}
+
+{% endblock %}
+
 {% block content %}
 
 <div class="container">
@@ -11,22 +21,18 @@
     <ol class="breadcrumb">
       <li><a href="#">CS 4911 Resources</a></li>
       <li><a href="#">Library</a></li>
-      <li class="active">Data</li>&nbsp;
-      <button type="button" class="btn btn-default btn-xs">
-        <span class="glyphicon glyphicon-arrow-up"></span>
-      </button>
+      <li class="active">Data</li>
     </ol>
   </div>
 
   <div class="table-responsive">
-    <table class="table table-hover table-condensed">
+    <table class="table table-bordered table-condensed">
       <tr>
-        <!--click header to change sort order?-->
         <th class="col-xs-2"><a href="#">Title</a></th>
         <th class="col-xs-2"></th>
         <th class="col-xs-2">Access</th>
         <th class="col-xs-2"><a href="#">Created By</a></th>
-        <th class="col-xs-2"><a href="#">Modified</a></th> <!--not always displayed-->
+        <th class="col-xs-2"><a href="#">Modified</a></th>
         <th class="col-xs-2"><a href="#">Size</a></th>
       </tr>
       <tr>
@@ -35,7 +41,6 @@
           <a href="#">Syllabus</a>
         </td>
         <td class="col-xs-2">
-          <!-- Single button -->
           <div class="btn-group">
             <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
               Action <span class="caret"></span>
@@ -57,7 +62,6 @@
           <a href="#">Lectures</a>
         </td>
         <td class="col-xs-2">
-        <!-- Single button -->
           <div class="btn-group">
             <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
               Action <span class="caret"></span>
@@ -79,7 +83,6 @@
           <a href="#">Study Guides</a>
         </td>
         <td class="col-xs-2">
-        <!-- Single button -->
           <div class="btn-group">
             <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
               Action <span class="caret"></span>

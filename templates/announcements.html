@@ -2,6 +2,16 @@
 
 {% block title %}Announcements{% endblock %}
 
+{% block courses %}
+
+  {% if curr_sites %}
+    {% for site in curr_sites %}
+      <li><a href="#" id="">{{ site.title }}</a></li>
+    {% endfor %}
+  {% endif %}
+
+{% endblock %}
+
 {% block content %}
 
 <div class="container">
@@ -10,37 +20,71 @@
   </div>
   
   <div class="table-responsive">
-    <table class="table table-hover table-condensed">
-      <tr>
-        <!--click header to change sort order?-->
-        <th class="col-xs-2"><a href="#">Subject</a></th>
-        <th class="col-xs-2"><a href="#">Saved By</a></th>
-        <th class="col-xs-2"><a href="#">Modified Date</a></th>
-        <th class="col-xs-2"><a href="#">Beginning Date</a></th>
-        <th class="col-xs-2"><a href="#">Ending Date</a></th>
-      </tr>
-      <tr>
-        <td class="col-xs-2"><a href="#">No Office Hourse this Wednesday</a></td>
-        <td class="col-xs-2">Student TA</td>
-        <td class="col-xs-2">Sep 10, 2013 2:51 pm</td>
-        <td class="col-xs-2"></td>
-        <td class="col-xs-2"></td>
-      </tr>
-      <tr>
-        <td class="col-xs-2"><a href="#">Grades Released for test 2</a></td>
-        <td class="col-xs-2">Student TA</td>
-        <td class="col-xs-2">Sep 10, 2013 2:51 pm</td>
-        <td class="col-xs-2"></td>
-        <td class="col-xs-2"></td>
-      </tr><tr>
-        <td class="col-xs-2"><a href="#">No Office Hours this Wednesday Again</a></td>
-        <td class="col-xs-2">Student TA</td>
-        <td class="col-xs-2">Sep 10, 2013 2:51 pm</td>
-        <td class="col-xs-2"></td>
-        <td class="col-xs-2"></td>
-      </tr>
-    </table>
+    <table class="table table-bordered table-condensed">
+        <tr>
+          <!--avoid linking to the official tsquare assignment page?-->
+          <th class="col-xs-2">Announcements</th>
+          <td class="col-xs-2"><a href="{{ assignment.href }}">assignment.title</a></td>
+        </tr>
+        <tr>
+          <th class="col-xs-2">Status</th>
+          <td class="col-xs-2">assignment.status</td>
+        </tr>
+        <tr>
+          <th class="col-xs-2">Open</th>
+          <td class="col-xs-2">assignment.openDate</td>
+        </tr>
+        <tr>
+          <th class="col-xs-2">Due</th>
+          <td class="col-xs-2">assignment.dueDate</td>
+        </tr>
+        <!--something to denote that an attachment exists?-->
+      </table>
+      <hr>
+      <table class="table table-bordered table-condensed">
+        <tr>
+          <!--avoid linking to the official tsquare assignment page?-->
+          <th class="col-xs-2">Announcements</th>
+          <td class="col-xs-2"><a href="{{ assignment.href }}">assignment.title</a></td>
+        </tr>
+        <tr>
+          <th class="col-xs-2">Status</th>
+          <td class="col-xs-2">assignment.status</td>
+        </tr>
+        <tr>
+          <th class="col-xs-2">Open</th>
+          <td class="col-xs-2">assignment.openDate</td>
+        </tr>
+        <tr>
+          <th class="col-xs-2">Due</th>
+          <td class="col-xs-2">assignment.dueDate</td>
+        </tr>
+        <!--something to denote that an attachment exists?-->
+      </table>
+      <hr>
+      <table class="table table-bordered table-condensed">
+        <tr>
+          <!--avoid linking to the official tsquare assignment page?-->
+          <th class="col-xs-2">Announcements</th>
+          <td class="col-xs-2"><a href="{{ assignment.href }}">assignment.title</a></td>
+        </tr>
+        <tr>
+          <th class="col-xs-2">Status</th>
+          <td class="col-xs-2">assignment.status</td>
+        </tr>
+        <tr>
+          <th class="col-xs-2">Open</th>
+          <td class="col-xs-2">assignment.openDate</td>
+        </tr>
+        <tr>
+          <th class="col-xs-2">Due</th>
+          <td class="col-xs-2">assignment.dueDate</td>
+        </tr>
+        <!--something to denote that an attachment exists?-->
+      </table>
+      <hr>
   </div>
+
 </div> <!-- /container -->
 
 {% endblock %}
