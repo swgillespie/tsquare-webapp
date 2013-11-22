@@ -651,6 +651,7 @@ pre code {
   margin-left: auto;
   padding-left: 15px;
   padding-right: 15px;
+  width: 100%;
 }
 .container:before,
 .container:after {
@@ -1288,10 +1289,10 @@ pre code {
     margin-left: 91.66666666666666%;
   }
 }
-table {
+*table {
   max-width: 100%;
   background-color: transparent;
-  font-size: 14px;
+  font-size: 12px;
 }
 th {
   text-align: left;
@@ -1299,7 +1300,7 @@ th {
 }
 .table {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .table thead > tr > th,
 .table tbody > tr > th,
@@ -1314,7 +1315,7 @@ th {
 }
 .table thead > tr > th {
   vertical-align: bottom;
-  border-bottom: 2px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
 }
 .table caption + thead tr:first-child th,
 .table colgroup + thead tr:first-child th,
@@ -5920,41 +5921,5 @@ td.visible-print {
 }
 .navbar-static-top {
   margin-bottom: 0px;
-}
-@media only screen and (max-width: 550px) {
-  /* Force table to not be like tables anymore */
-  table, thead, tbody, th, td, tr {
-    display: block !important;
-  }
-  /* Hide table headers (but not display: none;, for accessibility) */
-  thead tr {
-    position: absolute;
-    top: -9999px !important;
-    left: -9999px !important !important;
-  }
-  tr { border: 1px solid #ccc !important; }
-  td {
-    /* Behave  like a "row" */
-    border: none !important;
-    border-bottom: 1px solid #eee !important;
-    position: relative !important;
-    padding-left: 50% !important;
-    white-space: normal !important;
-    text-align:left !important;
-  }
-  td:before {
-    /* Now like a table header */
-    position: absolute !important;
-    /* Top/left values mimic padding */
-    top: 6px !important;
-    left: 6px !important;
-    width: 45% !important;
-    padding-right: 10px !important;
-    white-space: nowrap !important;
-    text-align:left !important;
-    font-weight: bold !important;
-  }
-  /* Label the data */
-  td:before { content: attr(data-title) !important; }
 }
 

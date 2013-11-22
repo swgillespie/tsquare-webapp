@@ -19,30 +19,31 @@
     <h4>Assignment List</h4>
   </div>
 
-    <table >
-      <thead>
+  <div class="table-responsive">
+    {% for assignment in assignments %}
+      <table class="table table-bordered table-condensed">
         <tr>
-          <!--click header to change sort order?-->
-          <th><a href="#">Assignments</a></th>
-          <th><a href="#">Status</a></th>
-          <th><a href="#">Open</a></th>
-          <th><a href="#">Due</a></th>
+          <!--avoid linking to the official tsquare assignment page?-->
+          <th class="col-xs-2">Assignments</th>
+          <td class="col-xs-2"><a href="{{ assignment.href }}">{{ assignment.title }}</a></td>
         </tr>
-      </thead>
-      <tbody>
-      {% for assignment in assignments %}
         <tr>
-          <!--avoiding linking to the official tsquare assignment page?-->
-          <td data-title="Assignments"><a href="{{ assignment.href }}">{{ assignment.title }}</a></td>
-          <td data-title="Status">{{ assignment.status }}</td>
-          <td data-title="Open">{{ assignment.openDate }}</td>
-          <td data-title="Due">{{ assignment.dueDate }}</td>
-          <!--something to denote that an attachment exists?-->
+          <th class="col-xs-2">Status</th>
+          <td class="col-xs-2">{{ assignment.status }}</td>
         </tr>
-      {% endfor %}
-      </tbody>
-    </table>
-  
+        <tr>
+          <th class="col-xs-2">Open</th>
+          <td class="col-xs-2">{{ assignment.openDate }}</td>
+        </tr>
+        <tr>
+          <th class="col-xs-2">Due</th>
+          <td class="col-xs-2">{{ assignment.dueDate }}</td>
+        </tr>
+        <!--something to denote that an attachment exists?-->
+      </table>
+      <hr>
+    {% endfor %}
+  </div>
 
 </div> <!-- /container -->
 

@@ -60,8 +60,9 @@ def tlogout(request):
 def home(request):
         tsapi = request.session['tsapi']
         user = tsapi.get_user_info()
+        curr_sites = tsapi.get_sites(filter_func=get_curr_sites)
         return render_to_response('home.html',{'userinfo':user,
-                                               'sites'   :sites})
+                                               'curr_sites':curr_sites})
 
 @login_required
 def profile(request):
