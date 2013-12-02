@@ -61,7 +61,7 @@ def home(request):
         tsapi = request.session['tsapi']
         user = tsapi.get_user_info()
         curr_sites = tsapi.get_sites(filter_func=get_curr_sites)
-        return render_to_response('home.html',{'userinfo':user,
+        return render_to_response('home.html',{'userinfo'  :user,
                                                'curr_sites':curr_sites})
 
 @login_required
@@ -80,7 +80,11 @@ def resources(request):
 def gradebook(request):
         tsapi = request.session['tsapi']
         curr_sites = tsapi.get_sites(filter_func=get_curr_sites)
-    	return render(request,'gradebook.html',{'curr_sites':curr_sites})
+        # arbitrarily gets grades from first current sites for 
+        site = curr_sites[0]
+        grades = tsapi.get_grades(site)
+    	return render(request,'gradebook.html',{'grades'    :grades,
+                                                'curr_sites':curr_sites})
 
 @login_required
 def github_login(request):
@@ -180,11 +184,11 @@ def sites(request):
 @login_required
 def assignments(request):
         tsapi = request.session['tsapi']
-        sites = tsapi.get_sites() # get sites from user class?
-        site = sites[17]
+        curr_sites = tsapi.get_sites(filter_func=get_curr_sites) # get sites from user class?
+        site = curr_sites[0]
         assignments = tsapi.get_assignments(site)
         return render(request,'assignments.html',{'assignments':assignments,
-                                                  'sites'      :sites})
+                                                  'curr_sites' :curr_sites})
 
 @login_required
 def course_info(request):
