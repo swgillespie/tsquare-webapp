@@ -39,6 +39,8 @@ def tlogin(request):
                     user = User.objects.get(username=username)
                     user.password = password
                     user.save()
+		    user = authenticate(username=username, password=password)
+		    login(request,user)
                     return redirect('/home/')
             except User.DoesNotExist:
                 # get username and email from tsapi. leave password blank
