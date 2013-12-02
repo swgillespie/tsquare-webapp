@@ -27,7 +27,6 @@ def tlogin(request):
                 tsapi = TSquareAPI(username, password)
                 request.session['tsapi'] = tsapi
                 request.session['courses'] = tsapi.get_sites()
-                print request.session['courses']
             except TSquareAuthException:
                 return render(request,'login.html',{'login_failed':'Invalid username or password.'})
             try:
@@ -37,7 +36,10 @@ def tlogin(request):
                     login(request, user)
                     return redirect('/home/')
                 else:
-                    return render(request,'login.html')
+                    user = User.objects.get(username=username)
+                    user.password = password
+                    user.save()
+                    return redirect('/home/')
             except User.DoesNotExist:
                 # get username and email from tsapi. leave password blank
                 user = User.objects.create_user(username, tsapi.get_user_info().email, password)
