@@ -1,5 +1,5 @@
 ## Re-design of T-Square for CS 4911 - Senior Design
-#Nirav Bhatia, Cameron Guthrie, Sean Gillespie
+### Nirav Bhatia, Cameron Guthrie, Sean Gillespie
 
 This repository contains the code for our Senior Design project. We wanted to create a more mobile-friendly
 TSquare interface, with the same capabilities and use cases as TSquare but with the ease of mobile navigation.
