@@ -20,7 +20,10 @@ GOOGLE_EXCHANGE_REDIRECT_URI = 'http://tsquare-webapp-temp.herokuapp.com/google_
 GOOGLE_OAUTH_TOKEN_URL = "https://accounts.google.com/o/oauth2/token"
 
 def tlogin(request):
-        if(request.method == 'POST'):
+    """
+    Logs into a user's T-square account by authenticating their credentials using T-square API
+    """
+    if(request.method == 'POST'):
             username = request.POST['username']
             password = request.POST['password']
             try:
@@ -57,6 +60,9 @@ def tlogin(request):
         return render(request,'login.html')
 
 def tlogout(request):
+     """
+     Logs out of a user's T-square account
+     """
 	logout(request)
 	return redirect('/')
 
@@ -92,6 +98,9 @@ def gradebook(request):
 
 @login_required
 def github_login(request):
+    """
+    Allows the user to authenticate T-square to use his or her Github account
+    """
         profile = UserProfile.objects.get(user_id=request.user.id)
         if len(profile.github_access_token) != 0:
             return redirect('/services?done=already&service=GitHub')
@@ -104,6 +113,9 @@ def github_login(request):
 
 @login_required
 def github_login_exchange(request):
+    """
+    Obtains an access token for a user's Github account in order to make requests on his or her behalf
+    """
         f = open(dirname+'/github_config.txt','r')
         lines = f.readlines()
         f.close()
@@ -129,6 +141,9 @@ def select_github_repos(request):
 # https://developers.google.com/accounts/docs/OAuth2Login
 @login_required
 def google_login(request):
+    """
+    Allows the user to authenticate T-square to use his or her Google Drive account
+    """
         profile = UserProfile.objects.get(user_id=request.user.id)
         if len(profile.gdrive_access_token) != 0:
             return redirect('/services?done=already&service=Google Drive')
@@ -145,6 +160,9 @@ def google_login(request):
 
 @login_required
 def google_login_exchange(request):
+    """
+    Obtains an access token for a user's Google Drive account in order to make requests on his or her behalf
+    """
         code = request.GET['code']
         f = open(dirname+'/google_config.txt','r')
         lines = f.readlines()
@@ -168,6 +186,9 @@ def gdrive_select(request):
 
 @login_required
 def external_services(request):
+    """
+    Shows all the external services a user can integrate his or her account with
+    """
     params = {}
     if 'done' in request.GET:
         if request.GET['done'] == 'already':
@@ -237,4 +258,7 @@ def get_curr_sites(site):
             return False
 
 def help(request):
+    """
+    Shows a documentation for T-square to the user
+    """
     return render(request,'help.html')
