@@ -1,44 +1,37 @@
-{% extends "layout.html" %}
 
-{% block title %}Help{% endblock %}
+<h4>Help Documentation</h4>
 
-{% block courses %}
+<h2>Welcome to the new T-square!</h2>
 
-  {% if curr_sites %}
-    {% for site in curr_sites %}
-      <li><a href="#" id="">{{ site.title }}</a></li>
-    {% endfor %}
-  {% endif %}
+<h4>Getting Started</h4>
 
-{% endblock %}
+<p>If you already have a T-square account, you can log in using your existing credentials by visiting <a href="http://tsquare-webapp-temp.herokuapp.com">http://tsquare-webapp-temp.herokuapp.com</a></p>
 
-{% block content %}
+<h4>Mobile/Web</h4>
 
-<div class="container">
-  <div class="panel panel-default">
-    <h6>&nbsp; Current Course: {{ curr_sites.0.title }}</h6>
-  </div>
-</div>
+<p>The new T-square is mobile/web and should scale appropriately on any mobile browser.</p>
 
-<div class="container">
-  <div class="header">
-    <h4>Help Documentation</h4>
-  </div>
-  
-  <div class="panel panel-default">
-    <div class="panel-body">
-      <div class="text1">
+<h4>Navigation</h4>
 
-          <h2>Welcome to the new T-square!</h2>
-
-          <h4>Getting Started</h4>
-
-          <p>If you already have a T-square account, you can log in using your existing credentials by visiting <a href="http://tsquare-webapp-temp.herokuapp.com">http://tsquare-webapp-temp.herokuapp.com</a></p>
-
-        <!--another link to github profile setup?-->
-      </div>
-    </div>
-  </div>
-</div> <!-- /container -->
-
-{% endblock %}
+<ul>
+    <li>
+        <p><u>Tools</u></p>
+        <p>Here you can find a list of links relative to each of your courses.</p>
+        <ul>
+            <li>Course Info</li>
+            <li>Announcements</li>
+            <li>Assignments</li>
+            <li>Resources</li>
+            <li>Gradebook</li>
+            <li>Wiki</li>
+        </ul>
+    </li>
+    <li>
+        <p><u>Courses</u></p>
+        <p>Here you can find a list of all the courses you're taking this semester.</p>
+    </li>
+    <li>
+        <p><u>Profile Settings</u></p>
+        <p>Here you can find options to set up some useful features for your account, such as Notifications, Time Zone, Integrating with external services etc.</p>
+    </li>
+</ul>
