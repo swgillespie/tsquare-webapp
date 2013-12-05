@@ -62,9 +62,17 @@ def tlogout(request):
 
 @login_required
 def home(request):
+        '''
+        A home screen view that displays current semester's courses in the 
+        navbar and sets user's current course to the first available course.
+        '''
         tsapi = request.session['tsapi']
         user = tsapi.get_user_info()
         curr_sites = tsapi.get_sites(filter_func=get_curr_sites)
+        # set current course to first by default
+        profile = UserProfile.objects.get(user_id=request.user.id)
+        profile.current_course = curr_sites[0]
+        profile.save()
         return render_to_response('home.html',{'userinfo'  :user,
                                                'curr_sites':curr_sites})
 
@@ -184,11 +192,13 @@ def sites(request):
         return render(request,'sites.html',{'curr_sites':curr_sites,
                                             'sites'     :sites})
 
-# example view that gets first site instead of using site_id param
 @login_required
 def assignments(request):
+        '''
+        An example assignments view that gets assignments from the first current semester.
+        '''
         tsapi = request.session['tsapi']
-        curr_sites = tsapi.get_sites(filter_func=get_curr_sites) # get sites from user class?
+        curr_sites = tsapi.get_sites(filter_func=get_curr_sites)
         site = curr_sites[0]
         assignments = tsapi.get_assignments(site)
         return render(request,'assignments.html',{'assignments':assignments,
@@ -196,9 +206,21 @@ def assignments(request):
 
 @login_required
 def course_info(request):
+        '''
+        A view for the course info page with a proof of concept for switching 
+        the current course by clicking on the navbar course links. Note: this 
+        feature only works on the course info page at the moment.
+        '''
         tsapi = request.session['tsapi']
         curr_sites = tsapi.get_sites(filter_func=get_curr_sites)
-    	return render(request,'course_info.html',{'curr_sites':curr_sites})
+        # save current course on click
+        profile = UserProfile.objects.get(user_id=request.user.id)
+        for site in curr_sites:
+            if (request.GET.get(site.id)):
+                profile.current_course = site.title
+                profile.save()
+        curr = profile.current_course
+        return render_to_response('course_info.html',{'curr_sites':curr_sites,'curr':curr})
 
 @login_required
 def announcements(request):
@@ -224,8 +246,10 @@ def assignment_detail(request):
         curr_sites = tsapi.get_sites(filter_func=get_curr_sites)
         return render(request,'assignment_detail.html',{'curr_sites':curr_sites})
 
-# filter_func that gets only the sites of the current term
 def get_curr_sites(site):
+        '''
+        A filter function that returns true if the parameter site is from the  current semester
+        '''
         time = timezone.now()
         if time.month < 6:
             curr_term = 'SPRING ' + str(time.year)
