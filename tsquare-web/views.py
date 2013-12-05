@@ -21,50 +21,50 @@ GOOGLE_OAUTH_TOKEN_URL = "https://accounts.google.com/o/oauth2/token"
 
 def tlogin(request):
     """
-    Logs into a user's T-square account by authenticating their credentials using T-square API
+    Logs in to a user's T-square account
     """
-    if(request.method == 'POST'):
-            username = request.POST['username']
-            password = request.POST['password']
-            try:
-                tsapi = TSquareAPI(username, password)
-                request.session['tsapi'] = tsapi
-                request.session['courses'] = tsapi.get_sites()
-            except TSquareAuthException:
-                return render(request,'login.html',{'login_failed':'Invalid username or password.'})
-            try:
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        try:
+            tsapi = TSquareAPI(username, password)
+            request.session['tsapi'] = tsapi
+            request.session['courses'] = tsapi.get_sites()
+        except TSquareAuthException:
+            return render(request,'login.html',{'login_failed':'Invalid username or password.'})
+        try:
+            user = User.objects.get(username=username)
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('/home/')
+            else:
                 user = User.objects.get(username=username)
+                user.password = password
+                user.save()
                 user = authenticate(username=username, password=password)
-                if user is not None:
-                    login(request, user)
-                    return redirect('/home/')
-                else:
-                    user = User.objects.get(username=username)
-                    user.password = password
-                    user.save()
-		    user = authenticate(username=username, password=password)
-		    login(request,user)
-                    return redirect('/home/')
-            except User.DoesNotExist:
-                # get username and email from tsapi. leave password blank
-                user = User.objects.create_user(username, tsapi.get_user_info().email, password)
-                profile = UserProfile(user=user)
-                profile.save()
-                user = User.objects.get(username=username)
-                ua = authenticate(username=username,password=password)
-                if ua is not None:
-                    login(request,ua)
-                    return redirect('/home/')
-                else:
-                    print 'new user created auth failed...'
-        return render(request,'login.html')
+                login(request,user)
+                return redirect('/home/')
+        except User.DoesNotExist:
+            # get username and email from tsapi. leave password blank
+            user = User.objects.create_user(username, tsapi.get_user_info().email, password)
+            profile = UserProfile(user=user)
+            profile.save()
+            user = User.objects.get(username=username)
+            ua = authenticate(username=username,password=password)
+            if ua is not None:
+                login(request,ua)
+                return redirect('/home/')
+            else:
+                print 'new user created auth failed...'
+    return render(request,'login.html')
 
 def tlogout(request):
      """
      Logs out of a user's T-square account
      """
-	logout(request)
-	return redirect('/')
+     logout(request)
+     return redirect('/')
 
 @login_required
 def home(request):
@@ -109,35 +109,35 @@ def github_login(request):
     """
     Allows the user to authenticate T-square to use his or her Github account
     """
-        profile = UserProfile.objects.get(user_id=request.user.id)
-        if len(profile.github_access_token) != 0:
-            return redirect('/services?done=already&service=GitHub')
-        f = open(dirname+'/github_config.txt','r')
-        lines = f.readlines()
-        f.close()
-        params = {'client_id':lines[0].strip('\n')} # add client id here
-        url = GITHUB_BASE_AUTH_URL+"?"+urllib.urlencode(params)
-        return redirect(url)
+    profile = UserProfile.objects.get(user_id=request.user.id)
+    if len(profile.github_access_token) != 0:
+        return redirect('/services?done=already&service=GitHub')
+    f = open(dirname+'/github_config.txt','r')
+    lines = f.readlines()
+    f.close()
+    params = {'client_id':lines[0].strip('\n')} # add client id here
+    url = GITHUB_BASE_AUTH_URL+"?"+urllib.urlencode(params)
+    return redirect(url)
 
 @login_required
 def github_login_exchange(request):
     """
     Obtains an access token for a user's Github account in order to make requests on his or her behalf
     """
-        f = open(dirname+'/github_config.txt','r')
-        lines = f.readlines()
-        f.close()
-        params = {
-            # add client id and secret here
-            'client_id':lines[0].strip('\n'),
-            'client_secret':lines[1].strip('\n'),
-            'code':request.GET['code']
-        }
-        access_token = requests.post(GITHUB_AUTH_EXCHANGE,data=params)
-        profile = UserProfile.objects.get(user_id=request.user.id)
-        profile.github_access_token = access_token.text
-        profile.save()
-        return redirect('/services?done=new&service=GitHub')
+    f = open(dirname+'/github_config.txt','r')
+    lines = f.readlines()
+    f.close()
+    params = {
+        # add client id and secret here
+        'client_id':lines[0].strip('\n'),
+        'client_secret':lines[1].strip('\n'),
+        'code':request.GET['code']
+    }
+    access_token = requests.post(GITHUB_AUTH_EXCHANGE,data=params)
+    profile = UserProfile.objects.get(user_id=request.user.id)
+    profile.github_access_token = access_token.text
+    profile.save()
+    return redirect('/services?done=new&service=GitHub')
 
 @login_required
 def select_github_repos(request):
@@ -152,41 +152,41 @@ def google_login(request):
     """
     Allows the user to authenticate T-square to use his or her Google Drive account
     """
-        profile = UserProfile.objects.get(user_id=request.user.id)
-        if len(profile.gdrive_access_token) != 0:
-            return redirect('/services?done=already&service=Google Drive')
-        f = open(dirname+'/google_config.txt','r')
-        lines = f.readlines()
-        f.close()
-        params = {
-            'client_id':lines[0].strip('\n'),
-            'response_type':'code',
-            'scope':'https://www.googleapis.com/auth/drive',
-            'redirect_uri':GOOGLE_EXCHANGE_REDIRECT_URI
-        }
-        return redirect(GOOGLE_BASE_AUTH_URL+"?"+urllib.urlencode(params))
+    profile = UserProfile.objects.get(user_id=request.user.id)
+    if len(profile.gdrive_access_token) != 0:
+        return redirect('/services?done=already&service=Google Drive')
+    f = open(dirname+'/google_config.txt','r')
+    lines = f.readlines()
+    f.close()
+    params = {
+        'client_id':lines[0].strip('\n'),
+        'response_type':'code',
+        'scope':'https://www.googleapis.com/auth/drive',
+        'redirect_uri':GOOGLE_EXCHANGE_REDIRECT_URI
+    }
+    return redirect(GOOGLE_BASE_AUTH_URL+"?"+urllib.urlencode(params))
 
 @login_required
 def google_login_exchange(request):
     """
     Obtains an access token for a user's Google Drive account in order to make requests on his or her behalf
     """
-        code = request.GET['code']
-        f = open(dirname+'/google_config.txt','r')
-        lines = f.readlines()
-        f.close()
-        params = {
-            'client_id':lines[0].strip('\n'),
-            'client_secret':lines[1].strip('\n'),
-            'code':code,
-            'redirect_uri':GOOGLE_EXCHANGE_REDIRECT_URI,
-            'grant_type':'authorization_code'
-        }
-        t = requests.post(GOOGLE_OAUTH_TOKEN_URL,data=params)
-        profile = UserProfile.objects.get(user_id=request.user.id)
-        profile.gdrive_access_token = t.json()['access_token']
-        profile.save()
-        return redirect('/services?done=new&service=Google Drive')
+    code = request.GET['code']
+    f = open(dirname+'/google_config.txt','r')
+    lines = f.readlines()
+    f.close()
+    params = {
+        'client_id':lines[0].strip('\n'),
+        'client_secret':lines[1].strip('\n'),
+        'code':code,
+        'redirect_uri':GOOGLE_EXCHANGE_REDIRECT_URI,
+        'grant_type':'authorization_code'
+    }
+    t = requests.post(GOOGLE_OAUTH_TOKEN_URL,data=params)
+    profile = UserProfile.objects.get(user_id=request.user.id)
+    profile.gdrive_access_token = t.json()['access_token']
+    profile.save()
+    return redirect('/services?done=new&service=Google Drive')
 
 @login_required
 def gdrive_select(request):
