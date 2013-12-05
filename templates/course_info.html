@@ -5,9 +5,13 @@
 {% block courses %}
 
   {% if curr_sites %}
+  <form action="#" method="get">
     {% for site in curr_sites %}
-      <li><a href="#" id="">{{ site.title }}</a></li>
+      <li>
+        <input type="submit" value={{ site.title }} name={{ site.id }}></input>
+      </li>
     {% endfor %}
+  </form>
   {% endif %}
 
 {% endblock %}
@@ -16,7 +20,7 @@
 
 <div class="container">
   <div class="panel panel-default">
-    <h6>&nbsp; Current Course: {{ curr_sites.0.title }}</h6>
+    <h6>&nbsp; Current Course: {{ curr.title }}</h6>
   </div>
 </div>
 
