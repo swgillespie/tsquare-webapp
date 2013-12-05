@@ -235,3 +235,6 @@ def get_curr_sites(site):
             return True
         else:
             return False
+
+def help(request):
+    return render(request,'help.html')
